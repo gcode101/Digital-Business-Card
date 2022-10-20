@@ -1,4 +1,6 @@
 import photo from "../photo.jpg"
+import { GrMail } from "react-icons/gr";
+import { AiFillLinkedin } from "react-icons/ai";
 
 
 function Info () {
@@ -9,8 +11,14 @@ function Info () {
 				<h1>Guelmis Cortina</h1>
 				<h3>Software Developer</h3>
 				<div className='info-buttons'>
-					<button className='email-button'>Email</button>
-					<button className='linkedin-button'>LinkedIn</button>
+					<button className='email-button'>
+						<GrMail /> 
+						Email
+					</button>
+					<button className='linkedin-button'>
+						<AiFillLinkedin />
+						LinkedIn
+					</button>
 				</div>
 			</div>
 

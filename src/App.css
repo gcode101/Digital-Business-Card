@@ -93,6 +93,10 @@ body {
 }
 
 .email-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
   width: 115px;
   height: 34px;
   left: 151px;
@@ -104,6 +108,10 @@ body {
 }
 
 .linkedin-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
   width: 115px;
   height: 34px;
   left: 283px;
