@@ -122,6 +122,52 @@ body {
   color: #F5F5F5;
 }
 
+.about-section {
+  display: flex;
+  width: 360px;
+  background-color: #F5F5F5;
+}
+
+.about-info {
+  display: flex;
+  flex-wrap: wrap;
+  width: 247px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #4A4E74;
+  padding-left: 51px;
+}
+
+.about-info h2 {
+  margin-bottom: 0px;
+}
+
+.inte-section {
+  display: flex;
+  width: 360px;
+  background-color: #F5F5F5;
+}
+
+.inte-info {
+  display: flex;
+  flex-wrap: wrap;
+  width: 247px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #4A4E74;
+  padding-left: 51px;
+}
+
+.inte-info h2 {
+  margin-bottom: 0px;
+}
+
 
 
 
