@@ -4,6 +4,10 @@ import { AiFillLinkedin } from "react-icons/ai";
 
 
 function Info () {
+
+	const linkedin = () => {
+		location.href = "https://www.linkedin.com/in/guelmis/";
+	}
 	return (
 		<div className='info-section'>
 			<img src={photo} className='photo' alt='photo'/>
@@ -15,7 +19,7 @@ function Info () {
 						<GrMail /> 
 						Email
 					</button>
-					<button className='linkedin-button'>
+					<button className='linkedin-button' onClick={linkedin}>
 						<AiFillLinkedin />
 						LinkedIn
 					</button>

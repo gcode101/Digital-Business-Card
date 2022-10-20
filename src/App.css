@@ -122,6 +122,10 @@ body {
   color: #F5F5F5;
 }
 
+.linkedin-butto::hover {
+  background-color: lightblue;
+}
+
 .about-section {
   display: flex;
   width: 360px;

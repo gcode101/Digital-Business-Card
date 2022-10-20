@@ -7,7 +7,7 @@ function Interests () {
 				<p>
 					My hobbies and interests are mostly reading, playing sports, and working out. 
 					I also enjoy programing, basically self-taught using tools online, 
-					I've built a couple of websites, nothing fancy.
+					I've built a couple of web apps, nothing fancy.
 				</p>
 			</div>
 		</div>
