@@ -5,11 +5,11 @@ function About () {
 			<div className='about-info'>
 				<h2>About</h2>
 				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in nulla enim. Quisque a semper sapien. 
-					Cras egestas massa at nisl pharetra cursus. 
-					Proin et est ultricies, faucibus mi vitae, faucibus est. 
-					Donec consequat commodo nulla. 
-					Fusce nec viverra est, sed tristique ligula. Fusce quis fringilla mi.
+					A driven problem-solver with a love for coding looking to work with other programmers who have similar interests. 
+					Possess expertise coming up with innovative and logical solutions to challenges. 
+					I am meticulous and exact in everything I do, and I am highly interested in technology, online and mobile apps, 
+					and user experience. I always seek out new opportunities to advance myself and try to stay informed of the most recent 
+					technological advancements.
 				</p>
 			</div>
 		</div>

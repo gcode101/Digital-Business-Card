@@ -168,6 +168,21 @@ body {
   margin-bottom: 0px;
 }
 
+.footer-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  background: #D5D4D8;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.icon {
+  color: #918E9B;
+  padding: 15px;
+  font-size: 32px;
+}
+
 
 
 
