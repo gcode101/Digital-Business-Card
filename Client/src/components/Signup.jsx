@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios"; 
 
 
 function Signup() {
@@ -9,7 +10,9 @@ function Signup() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log("Form has been submitted");
+		axios.post('http://localhost:3000/register', {name, email, password})
+		.then(result => console.log(result))
+		.catch(err => console.log(error))
 	}
 
 	return (
