@@ -12,6 +12,22 @@ app.use(cors());
 
 mongoose.connect(config.dburl);
 
+app.post("/login", (req, res) => {
+	const { email, password } = req.body;
+	UserModel.findOne({ email: email })
+	.then(user => {
+		if(user){
+			if(user.password === password){
+				res.json("success");
+			}else{
+				res.json("incorrect password");
+			}
+		}else{
+			res.json("user not found");
+		}
+	})
+});
+
 app.post('/register', (req, res) => {
 
 	UserModel.create(req.body)

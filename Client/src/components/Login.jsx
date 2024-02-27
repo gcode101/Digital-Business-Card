@@ -14,8 +14,11 @@ function Login() {
 		axios.post('http://localhost:3000/login', { email, password })
 		.then(result => {
 			console.log(result)
-			navigate('/card')
+			if(result.data === "success"){
+				navigate('/card')
+			}
 		})
+		.catch(err => console.log(err))
 	}
 
 	return (
