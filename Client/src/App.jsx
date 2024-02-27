@@ -7,18 +7,18 @@ import Home from './components/Home'
 import Card from './components/Card/Card'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup'
+import Login from './components/Login'
 
 function App() {
   return (
   	<Router>
-  	<div>
   		<Navbar />
 	  	<Routes>
 	    	<Route exact path="/" Component={Home} />
 	    	<Route path="/card" Component={Card}/>
 	    	<Route path="/signup" Component={Signup}/>
+	    	<Route path="/login" Component={Login}/>
 		</Routes>
-	</div>
 	</Router>
   )
 }
