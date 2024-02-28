@@ -42,7 +42,7 @@ function Login() {
 									/>
 									<label htmlFor="password">Password</label>
 									<input 
-										type="text"
+										type="password"
 										className="form-control mt-2"
 										id="password"
 										placeholder="Enter your password"

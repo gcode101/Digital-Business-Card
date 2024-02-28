@@ -4,7 +4,7 @@ const cors = require("cors");
 const port = process.env.PORT || 3000;
 const config = require("./config");
 const UserModel = require("./models/UserModel");
-
+const bcrypt = require("bcrypt");
 
 const app = express();
 app.use(express.json());
@@ -17,11 +17,13 @@ app.post("/login", (req, res) => {
 	UserModel.findOne({ email: email })
 	.then(user => {
 		if(user){
-			if(user.password === password){
-				res.json("success");
-			}else{
-				res.json("incorrect password");
-			}
+			bcrypt.compare(password, user.password, (err, response) => {
+				if(response){
+					res.json("success");
+				}else{
+					res.json("incorrect password");
+				}
+			});
 		}else{
 			res.json("user not found");
 		}
@@ -29,11 +31,13 @@ app.post("/login", (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-
-	UserModel.create(req.body)
-	.then(users => res.json(users))
-	.catch(err => res.json(err))
-
+	const { name, email, password } = req.body;
+	bcrypt.hash(password, 10)
+	.then(hash => {
+		UserModel.create({ name, email, password: hash })
+		.then(users => res.json(users))
+		.catch(err => res.json(err))		
+	}).catch(err => console.log(err.message))
 });
 
 app.listen(port, () => {
