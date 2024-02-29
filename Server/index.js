@@ -5,12 +5,35 @@ const port = process.env.PORT || 3000;
 const config = require("./config");
 const UserModel = require("./models/UserModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+	origin: ["http://localhost:5173"],
+	methods: ["GET", "POST"],
+	credentials: true
+}));
+app.use(cookieParser());
 
 mongoose.connect(config.dburl);
+
+const verifyUser = (req, res, next) => {
+	const token = req.cookies.token;
+	if(!token){
+		return res.json("no token");
+	}else{
+		jwt.verify(token, 'jwt-secret-key', (err, decoded) => {
+			if(err) return res.json("wrong token");
+			next();
+		});
+	}
+}
+
+app.get('/card', verifyUser, (req, res) => {
+	return res.json('success');
+});
 
 app.post("/login", (req, res) => {
 	const { email, password } = req.body;
@@ -19,6 +42,8 @@ app.post("/login", (req, res) => {
 		if(user){
 			bcrypt.compare(password, user.password, (err, response) => {
 				if(response){
+					const token = jwt.sign({ email: user.email }, "jwt-secret-key", { expiresIn: "1d" });
+					res.cookie("token", token);
 					res.json("success");
 				}else{
 					res.json("incorrect password");
