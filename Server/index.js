@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const port = process.env.PORT || 3000;
-const config = require("./config");
+const {dburl, secret} = require("./config");
 const UserModel = require("./models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -17,21 +17,21 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
-mongoose.connect(config.dburl);
+mongoose.connect(dburl);
 
-const verifyUser = (req, res, next) => {
+const verifyToken = (req, res, next) => {
 	const token = req.cookies.token;
 	if(!token){
 		return res.json("no token");
 	}else{
-		jwt.verify(token, 'jwt-secret-key', (err, decoded) => {
+		jwt.verify(token, secret, (err, decoded) => {
 			if(err) return res.json("wrong token");
 			next();
 		});
 	}
 }
 
-app.get('/card', verifyUser, (req, res) => {
+app.get('/card', verifyToken, (req, res) => {
 	return res.json('success');
 });
 
@@ -42,7 +42,7 @@ app.post("/login", (req, res) => {
 		if(user){
 			bcrypt.compare(password, user.password, (err, response) => {
 				if(response){
-					const token = jwt.sign({ email: user.email }, "jwt-secret-key", { expiresIn: "1d" });
+					const token = jwt.sign({ email: user.email }, secret, { expiresIn: "1h" });
 					res.cookie("token", token);
 					res.json("success");
 				}else{
