@@ -8,6 +8,7 @@ import Card from './components/Card/Card'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup'
 import Login from './components/Login'
+import Logout from './components/Logout'
 
 function App() {
   return (

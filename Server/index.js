@@ -35,6 +35,11 @@ app.get('/card', verifyToken, (req, res) => {
 	return res.json('success');
 });
 
+app.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.status(200).send({ message: 'Logged out successfully' });	
+});
+
 app.post("/login", (req, res) => {
 	const { email, password } = req.body;
 	UserModel.findOne({ email: email })
