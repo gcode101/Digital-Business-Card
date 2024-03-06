@@ -18,15 +18,15 @@ app.use(cookieParser());
 
 mongoose.connect(dburl);
 
-app.get('/card', verifyToken, (req, res) => {
-	return res.json('success');
-});
-
 app.get('/logout', logout);
 
 app.post("/login", login);
 
 app.post('/register', createUser);
+
+app.get('/card', verifyToken, (req, res) => {
+	return res.json('success');
+});
 
 app.listen(port, () => {
 	console.log(`server running on port ${port}`);
