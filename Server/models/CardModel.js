@@ -30,7 +30,13 @@ const CardSchema = new mongoose.Schema({
 
 	footerLinks: [{
 		type: String
-	}]
+	}],
+
+	userID: {
+		type: mongoose.Schema.Types.ObjectID,
+		required: true,
+		ref: "user"
+	}
 
 });
 
