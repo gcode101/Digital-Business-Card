@@ -16,7 +16,7 @@ function Login() {
 		.then(result => {
 			console.log(result)
 			if(result.data === "success"){
-				navigate('/card')
+				navigate('/profile')
 			}
 		})
 		.catch(err => console.log(err))

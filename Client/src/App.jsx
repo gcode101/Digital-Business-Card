@@ -9,6 +9,8 @@ import Navbar from './components/Navbar'
 import Signup from './components/Signup'
 import Login from './components/Login'
 import Logout from './components/Logout'
+import Profile from './components/Profile'
+import CardBuild from './components/CardBuild'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
 	    	<Route path="/card" Component={Card}/>
 	    	<Route path="/signup" Component={Signup}/>
 	    	<Route path="/login" Component={Login}/>
+	    	<Route path="/profile" Component={Profile}/>
+	    	<Route path="/card-build" Component={CardBuild}/>
 		</Routes>
 	</Router>
   )
