@@ -1,5 +1,33 @@
+import { useState } from 'react';
+import axios from 'axios';
+
 
 function CardBuild() {
+
+	const [photo, setPhoto] = useState();
+	const [title, setTitle] = useState();
+	const [contactLinks, setContactLinks] = useState();
+	const [about, setAbout] = useState();
+	const [interests, setInterests] = useState();
+	const [footer, setFooter] = useState();
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		axios.post('http://localhost:3000/cards'), {
+			photo,
+			title,
+			contactLinks,
+			about,
+			interests,
+			footer,
+			userId
+		})
+		.then(result => {
+			console.log(result)
+		})
+		.catch((err) => console.log(err));
+	}
+
 	return(
 		<div>
 			<h1 className="text-center text-light">Build your Digital Card</h1>
@@ -8,7 +36,7 @@ function CardBuild() {
 					<div className="col-md-6">
 						<div className="card">
 							<div className="card-body">
-								<form>
+								<form onSubmit={handleSubmit}>
 									<div className="from-group">
 										<label htmlFor="photo">Photo</label>
 										<input 
