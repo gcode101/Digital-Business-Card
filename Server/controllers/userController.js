@@ -21,7 +21,7 @@ const login = (req, res) => {
 		if(user){
 			bcrypt.compare(password, user.password, (err, response) => {
 				if(response){
-					const token = jwt.sign({ email: user.email }, secret, { expiresIn: "1h" });
+					const token = jwt.sign({ name: user.name, email: user.email, userId: user._id }, secret, { expiresIn: "1h" });
 					res.cookie("token", token);
 					res.json("success");
 				}else{

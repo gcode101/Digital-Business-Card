@@ -1,25 +1,54 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { getCookie } from '../services/GetCookies'
 
 
 function CardBuild() {
 
 	const [photo, setPhoto] = useState();
 	const [title, setTitle] = useState();
-	const [contactLinks, setContactLinks] = useState();
+
+	const [linkedIn, setLinkedIn] = useState();
+	const [contactLinks, setContactLinks] = useState([]);
+
 	const [about, setAbout] = useState();
 	const [interests, setInterests] = useState();
-	const [footer, setFooter] = useState();
+
+	const [footerLink, setFooterLink] = useState('');
+	const [footerLinks, setFooterLinks] = useState([]);
+
+	const getTokenPayload = () => {
+		const token = getCookie('token');
+		let tokenPayload = '';
+		if (token){
+			tokenPayload = JSON.parse(atob(token.split('.')[1]));
+		}
+		return tokenPayload;
+	}
+
+	const addFooterLink = () => {
+		setFooterLinks([...footerLinks, footerLink]);
+		setFooterLink('');
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		axios.post('http://localhost:3000/cards'), {
+		const tokenPayload = getTokenPayload();
+		const userEmail = tokenPayload.email;
+		const userId = tokenPayload.userId;
+		const userName = tokenPayload.name;
+
+		setContactLinks([userEmail, linkedIn]);
+		setFooterLinks([...footerLinks, footerLink]);
+
+		axios.post('http://localhost:3000/cards', {
 			photo,
+			userName,
 			title,
 			contactLinks,
 			about,
 			interests,
-			footer,
+			footerLinks,
 			userId
 		})
 		.then(result => {
@@ -27,7 +56,6 @@ function CardBuild() {
 		})
 		.catch((err) => console.log(err));
 	}
-
 	return(
 		<div>
 			<h1 className="text-center text-light">Build your Digital Card</h1>
@@ -54,13 +82,13 @@ function CardBuild() {
 											placeholder="Enter your professional title"
 											onChange={(e) => { setTitle(e.target.value) }}
 										/>
-										<label htmlFor="contact-links">Contact Links</label>
+										<label htmlFor="linkedIn">LinkedIn</label>
 										<input 
 											type="text"
 											className="form-control mt-2"
-											id="contact-links"
-											placeholder="Enter your email and linkedIn link"
-											onChange={(e) => { setContactLinks(e.target.value) }}
+											id="linkedIn"
+											placeholder="Enter your LinkedIn link"
+											onChange={(e) => { setLinkedIn(e.target.value) }}
 										/>
 										<label htmlFor="about">About</label>
 										<input 
@@ -83,11 +111,13 @@ function CardBuild() {
 											type="text"
 											className="form-control mt-2"
 											id="footer"
-											placeholder="Enter 4 social links"
-											onChange={(e) => { setFooter(e.target.value) }}
+											placeholder="Enter social link"
+											value={footerLink}
+											onChange={(e) => { setFooterLink(e.target.value) }}
 										/>
+										<div onClick={addFooterLink} className="btn btn-outline-primary">Add another link</div>
 									</div>
-									<button type="submit" className="btn btn-primary mt-3">Create Card</button>
+									<button type="submit" className="btn btn-primary mt-3 center">Create Card</button>
 								</form>
 							</div>
 						</div>
