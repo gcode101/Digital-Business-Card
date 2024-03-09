@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { getCookie } from '../services/GetCookies'
+import { getCookie } from '../services/GetCookies';
+import { useNavigate } from 'react-router-dom';
 
 
 function CardBuild() {
@@ -9,13 +10,15 @@ function CardBuild() {
 	const [title, setTitle] = useState();
 
 	const [linkedIn, setLinkedIn] = useState();
-	const [socialLinks, setSocialtLinks] = useState([]);
+	const [social, setSocialLinks] = useState([]);
 
 	const [about, setAbout] = useState();
 	const [interests, setInterests] = useState();
 
 	const [footerLink, setFooterLink] = useState('');
-	const [footerLinks, setFooterLinks] = useState([]);
+	const [footer, setFooterLinks] = useState([]);
+
+	const navigate = useNavigate();
 
 	const getTokenPayload = () => {
 		const token = getCookie('token');
@@ -27,7 +30,7 @@ function CardBuild() {
 	}
 
 	const addFooterLink = () => {
-		setFooterLinks([...footerLinks, footerLink]);
+		setFooterLinks([...footer, footerLink]);
 		setFooterLink('');
 	}
 
@@ -38,8 +41,11 @@ function CardBuild() {
 		const userID = tokenPayload.userId;
 		const name = tokenPayload.name;
 
-		setSocialtLinks([userEmail, linkedIn]);
-		setFooterLinks([...footerLinks, footerLink]);
+	    setSocialLinks(prevSocialLinks => [...prevSocialLinks, userEmail, linkedIn]);
+	    setFooterLinks(prevFooterLinks => [...prevFooterLinks, footerLink]);
+
+	    const socialLinks = [...social, userEmail, linkedIn];
+	    const footerLinks = [...footer, footerLink];
 
 		axios.post('http://localhost:3000/cards', {
 			picture,
@@ -53,6 +59,7 @@ function CardBuild() {
 		})
 		.then(result => {
 			console.log(result)
+			navigate("/card");
 		})
 		.catch((err) => console.log(err));
 	}
@@ -115,7 +122,12 @@ function CardBuild() {
 											value={footerLink}
 											onChange={(e) => { setFooterLink(e.target.value) }}
 										/>
-										<div onClick={addFooterLink} className="btn btn-outline-primary">Add another link</div>
+										<div>
+											<div onClick={addFooterLink} className="btn btn-outline-primary">Add another link</div>
+											{ footer.map((link, index) => (
+												<div key={index}>{link}</div>
+											))}
+										</div>
 									</div>
 									<button type="submit" className="btn btn-primary mt-3 center">Create Card</button>
 								</form>
