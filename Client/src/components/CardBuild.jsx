@@ -5,11 +5,11 @@ import { getCookie } from '../services/GetCookies'
 
 function CardBuild() {
 
-	const [photo, setPhoto] = useState();
+	const [picture, setPicture] = useState();
 	const [title, setTitle] = useState();
 
 	const [linkedIn, setLinkedIn] = useState();
-	const [contactLinks, setContactLinks] = useState([]);
+	const [socialLinks, setSocialtLinks] = useState([]);
 
 	const [about, setAbout] = useState();
 	const [interests, setInterests] = useState();
@@ -35,21 +35,21 @@ function CardBuild() {
 		e.preventDefault();
 		const tokenPayload = getTokenPayload();
 		const userEmail = tokenPayload.email;
-		const userId = tokenPayload.userId;
-		const userName = tokenPayload.name;
+		const userID = tokenPayload.userId;
+		const name = tokenPayload.name;
 
-		setContactLinks([userEmail, linkedIn]);
+		setSocialtLinks([userEmail, linkedIn]);
 		setFooterLinks([...footerLinks, footerLink]);
 
 		axios.post('http://localhost:3000/cards', {
-			photo,
-			userName,
+			picture,
+			name,
 			title,
-			contactLinks,
+			socialLinks,
 			about,
 			interests,
 			footerLinks,
-			userId
+			userID
 		})
 		.then(result => {
 			console.log(result)
@@ -66,13 +66,13 @@ function CardBuild() {
 							<div className="card-body">
 								<form onSubmit={handleSubmit}>
 									<div className="from-group">
-										<label htmlFor="photo">Photo</label>
+										<label htmlFor="picture">Picture</label>
 										<input 
 											type="text"
 											className="form-control mt-2"
-											id="photo"
+											id="picture"
 											placeholder="Enter a link to your photo"
-											onChange={(e) => { setPhoto(e.target.value) }}
+											onChange={(e) => { setPicture(e.target.value) }}
 										/>
 										<label htmlFor="title">Title</label>
 										<input 
