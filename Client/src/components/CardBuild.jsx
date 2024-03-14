@@ -38,15 +38,20 @@ function CardBuild() {
 	    const socialLinks = [...social, userEmail, linkedIn];
 	    const footerLinks = [...footer, footerLink];
 
-		axios.post('http://localhost:3000/card', {
-			picture,
-			name,
-			title,
-			socialLinks,
-			about,
-			interests,
-			footerLinks,
-			userID
+	    const formData = new FormData();
+	    formData.append('file', picture);
+	    formData.append('name', name);
+	    formData.append('title', title);
+	    formData.append('socialLinks', socialLinks);
+	    formData.append('about', about);
+	    formData.append('interests', interests);
+	    formData.append('footerLinks', footerLinks);
+	    formData.append('userID', userID);
+
+		axios.post('http://localhost:3000/card', formData, {
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			}
 		})
 		.then(result => {
 			console.log(result)
@@ -66,11 +71,11 @@ function CardBuild() {
 									<div className="from-group">
 										<label htmlFor="picture">Picture</label>
 										<input 
-											type="text"
+											type="file"
 											className="form-control mt-2"
 											id="picture"
-											placeholder="Enter a link to your photo"
-											onChange={(e) => { setPicture(e.target.value) }}
+											placeholder="Upload your photo"
+											onChange={(e) =>  setPicture(e.target.files[0])}
 										/>
 										<label htmlFor="title">Title</label>
 										<input 

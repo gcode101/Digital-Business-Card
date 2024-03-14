@@ -1,9 +1,7 @@
 const CardModel = require("../models/CardModel");
-const UserModel = require("../models/UserModel");
 
 const createCard = (req, res) => {
 	const { 
-		picture,
 		name,
 		title,
 		socialLinks,
@@ -13,8 +11,12 @@ const createCard = (req, res) => {
 		userID 
 	} = req.body;
 
+	const picture = req.file;
+
+	const picturePath = picture.path.replace(/^public\//, '');
+
 	const card = new CardModel({
-		picture,
+		picture: picturePath,
 		name,
 		title,
 		socialLinks,

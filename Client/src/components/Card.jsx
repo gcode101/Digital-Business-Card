@@ -14,6 +14,7 @@ function Card() {
 	const navigate = useNavigate();
 	const { userID } = getTokenPayload();
 
+	const [photo, setPhoto] = useState();
 	const [name, setName] = useState();
 	const [title, setTitle] = useState();
 	const [socialLinks, setSocialLinks] = useState([]);
@@ -48,6 +49,8 @@ function Card() {
 					footerLinks
 				} = result.data;
 
+				setPhoto(result.data.picture);
+				console.log(result.data);
 				setName(name);
 				setTitle(title);
 				setSocialLinks(socialLinks);
@@ -95,9 +98,9 @@ function Card() {
 	return (
 		<div className="card-container">
 			{cardExists ? (
-				<div className="card">
+				<div className="full-card">
 					<div className='info-section'>
-						<img src='#' className='photo' alt='photo'/>
+						<img src={`http://localhost:3000/${photo}`} className='photo' alt='photo'/>
 						<div className='info'>
 							<h1>{ name }</h1>
 							<h3>{ title }</h3>
@@ -131,22 +134,22 @@ function Card() {
 
 					<div className='footer-section'>
 						{twitter && (	
-							<button onClick={() => {openNewTab(twitter)}}>
+							<button className='icon' onClick={() => {openNewTab(twitter)}}>
 								<FaSquareXTwitter />
 							</button>
 						)}
 						{linkedinLink && (
-							<button onClick={() => {openNewTab(linkedinLink)}}>
+							<button className='icon' onClick={() => {openNewTab(linkedinLink)}}>
 								<SiLinkedin/>
 							</button>
 						)}
 						{github && (
-							<button onClick={() => {openNewTab(github)}}>
+							<button className='icon' onClick={() => {openNewTab(github)}}>
 								<FaSquareGithub />
 							</button>
 						)}
 						{insta && (
-							<button onClick={() => {openNewTab(insta)}}>
+							<button className='icon' onClick={() => {openNewTab(insta)}}>
 								<FaInstagramSquare />
 							</button>
 						)}

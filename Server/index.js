@@ -6,10 +6,12 @@ const { dburl } = require("./config");
 const cookieParser = require("cookie-parser");
 const { createUser, login, logout } = require("./controllers/UserController");
 const { verifyToken } = require("./services/auth");
+const { upload } = require("./services/imgStorage");
 const { createCard, getCard } = require("./controllers/CardController");
 
 const app = express();
 app.use(express.json());
+app.use(express.static('public'));
 app.use(cors({
 	origin: ["http://localhost:5173"],
 	methods: ["GET", "POST"],
@@ -31,7 +33,7 @@ app.get('/cardAuth', verifyToken, (req, res) => {
 
 app.get('/card/:userID', verifyToken, getCard);
 
-app.post('/card', verifyToken, createCard);
+app.post('/card', verifyToken, upload.single('file'), createCard);
 
 app.listen(port, () => {
 	console.log(`server running on port ${port}`);
