@@ -6,7 +6,7 @@ const { dburl } = require("./config");
 const cookieParser = require("cookie-parser");
 const { createUser, login, logout } = require("./controllers/UserController");
 const { verifyToken } = require("./services/auth");
-const { createCard } = require("./controllers/CardController");
+const { createCard, getCard } = require("./controllers/CardController");
 
 const app = express();
 app.use(express.json());
@@ -25,11 +25,13 @@ app.post("/login", login);
 
 app.post('/register', createUser);
 
-app.get('/card', verifyToken, (req, res) => {
+app.get('/cardAuth', verifyToken, (req, res) => {
 	return res.json('success');
 });
 
-app.post('/cards', createCard);
+app.get('/card/:userID', verifyToken, getCard);
+
+app.post('/card', verifyToken, createCard);
 
 app.listen(port, () => {
 	console.log(`server running on port ${port}`);

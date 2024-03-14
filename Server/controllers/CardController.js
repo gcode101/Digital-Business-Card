@@ -43,6 +43,22 @@ const createCard = (req, res) => {
         });
 }
 
+const getCard = (req, res) => {
+	const { userID } = req.params;
+	CardModel.findOne({ userID })
+	.then(card => {
+		if(!card){
+			return res.status(404).json({ message: 'Card not found' })
+		}
+		res.json(card);
+	})
+	.catch(error => { 
+		console.error('Error finding card:', error);
+		res.status(500).json({ message: 'Internal server error' });
+	});
+}
+
 module.exports = {
-	createCard
+	createCard,
+	getCard
 }

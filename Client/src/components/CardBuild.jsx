@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { getCookie } from '../services/GetCookies';
+import { getTokenPayload } from '../services/TokenPayload';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -20,15 +20,6 @@ function CardBuild() {
 
 	const navigate = useNavigate();
 
-	const getTokenPayload = () => {
-		const token = getCookie('token');
-		let tokenPayload = '';
-		if (token){
-			tokenPayload = JSON.parse(atob(token.split('.')[1]));
-		}
-		return tokenPayload;
-	}
-
 	const addFooterLink = () => {
 		setFooterLinks([...footer, footerLink]);
 		setFooterLink('');
@@ -38,7 +29,7 @@ function CardBuild() {
 		e.preventDefault();
 		const tokenPayload = getTokenPayload();
 		const userEmail = tokenPayload.email;
-		const userID = tokenPayload.userId;
+		const userID = tokenPayload.userID;
 		const name = tokenPayload.name;
 
 	    setSocialLinks(prevSocialLinks => [...prevSocialLinks, userEmail, linkedIn]);
@@ -47,7 +38,7 @@ function CardBuild() {
 	    const socialLinks = [...social, userEmail, linkedIn];
 	    const footerLinks = [...footer, footerLink];
 
-		axios.post('http://localhost:3000/cards', {
+		axios.post('http://localhost:3000/card', {
 			picture,
 			name,
 			title,
@@ -123,13 +114,13 @@ function CardBuild() {
 											onChange={(e) => { setFooterLink(e.target.value) }}
 										/>
 										<div>
-											<div onClick={addFooterLink} className="btn btn-outline-primary">Add another link</div>
+											<div onClick={addFooterLink} className="btn btn-outline-primary mt-2">Add another link</div>
 											{ footer.map((link, index) => (
 												<div key={index}>{link}</div>
 											))}
 										</div>
 									</div>
-									<button type="submit" className="btn btn-primary mt-3 center">Create Card</button>
+									<button type="submit" className="btn btn-primary mt-4 center">Create Card</button>
 								</form>
 							</div>
 						</div>

@@ -4,7 +4,7 @@ import reactLogo from './assets/react.svg'
 import './App.css'
 
 import Home from './components/Home'
-import Card from './components/Card/Card'
+import Card from './components//Card'
 import Navbar from './components/Navbar'
 import Signup from './components/Signup'
 import Login from './components/Login'

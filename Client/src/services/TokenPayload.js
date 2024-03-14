@@ -1,5 +1,5 @@
 
-export function getCookie(name) {
+function getCookie(name) {
   const cookies = document.cookie.split(';');
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i].trim().split('=');
@@ -8,4 +8,13 @@ export function getCookie(name) {
     }
   }
   return null;
+}
+
+export const getTokenPayload = () => {
+	const token = getCookie('token');
+	let tokenPayload = '';
+	if (token){
+		tokenPayload = JSON.parse(atob(token.split('.')[1]));
+	}
+	return tokenPayload;
 }
