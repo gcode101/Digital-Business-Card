@@ -42,10 +42,14 @@ function CardBuild() {
 	    formData.append('file', picture);
 	    formData.append('name', name);
 	    formData.append('title', title);
-	    formData.append('socialLinks', socialLinks);
+	    socialLinks.forEach(link => {
+	    	formData.append('socialLinks[]', link);
+	    });
 	    formData.append('about', about);
 	    formData.append('interests', interests);
-	    formData.append('footerLinks', footerLinks);
+	    footerLinks.forEach((link) =>{
+	    	formData.append('footerLinks[]', link);
+	    });
 	    formData.append('userID', userID);
 
 		axios.post('http://localhost:3000/card', formData, {
@@ -54,7 +58,6 @@ function CardBuild() {
 			}
 		})
 		.then(result => {
-			console.log(result)
 			navigate("/card");
 		})
 		.catch((err) => console.log(err));

@@ -50,7 +50,6 @@ function Card() {
 				} = result.data;
 
 				setPhoto(result.data.picture);
-				console.log(result.data);
 				setName(name);
 				setTitle(title);
 				setSocialLinks(socialLinks);
@@ -59,6 +58,7 @@ function Card() {
 				setFooterLinks(footerLinks);
 				setCardExists(true);
 
+				console.log('footerLinks', footerLinks);
 				function getFooterLinks() {
 					footerLinks.forEach((item) => {
 						if(item.includes('twitter')){
@@ -100,7 +100,7 @@ function Card() {
 			{cardExists ? (
 				<div className="full-card">
 					<div className='info-section'>
-						<img src={`http://localhost:3000/${photo}`} className='photo' alt='photo'/>
+						<img src={`http://localhost:3000/${photo}`} className='img-fluid' alt='photo'/>
 						<div className='info'>
 							<h1>{ name }</h1>
 							<h3>{ title }</h3>
