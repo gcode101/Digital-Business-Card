@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom'; 
 import { getTokenPayload } from '../services/TokenPayload';
+import { MdEmail } from "react-icons/md";
+import { SiLinkedin } from "react-icons/si";
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaSquareGithub } from "react-icons/fa6";
+import { FaInstagramSquare } from "react-icons/fa";
 
 function Card() {
 
@@ -16,6 +21,10 @@ function Card() {
 	const [interests, setInterests] = useState();
 	const [footerLinks, setFooterLinks] = useState([]);
 	const [cardExists, setCardExists] = useState(false);
+
+	const[twitter, setTwitter] = useState('');
+	const[github, setGithub] = useState('');
+	const[insta, setInsta] = useState('');
 
 	useEffect(() => {
 		axios.get('http://localhost:3000/cardAuth')
@@ -46,6 +55,20 @@ function Card() {
 				setInterests(interests);
 				setFooterLinks(footerLinks);
 				setCardExists(true);
+
+				function getFooterLinks() {
+					footerLinks.forEach((item) => {
+						if(item.includes('twitter')){
+							setTwitter(item);
+						}else if(item.includes('github')){
+							setGithub(item);
+						}else if(item.includes('instagram')){
+							setInsta(item);
+						}
+					});
+				}
+
+				getFooterLinks();
 			}
 
 		})
@@ -59,14 +82,15 @@ function Card() {
 
 	const openNewTab = (link) => {
 		//open new tab
-		const newTab = window.open(linkedinLink, '_blank');
+		const newTab = window.open(link, '_blank');
 		if(newTab){
 			newTab.focus();
 		}else{
 			//if blocked by browser, fall back to same tab
-			window.location.href = linkedinLink;
+			window.location.href = link;
 		}
 	}
+
 
 	return (
 		<div className="card-container">
@@ -79,9 +103,11 @@ function Card() {
 							<h3>{ title }</h3>
 							<div className='info-buttons'>
 								<button className='email-button' onClick={() => {window.open(emailLink, '_blank')}}>
+									<MdEmail />
 									Email
 								</button>
 								<button className='linkedin-button' onClick={() => {openNewTab(linkedinLink)}}>
+									<SiLinkedin />
 									LinkedIn
 								</button>
 							</div>
@@ -103,20 +129,28 @@ function Card() {
 					</div> 
 				
 
-	{/*				<div className='footer-section'>
-						<a href={twitter}>
-							<FaTwitterSquare className='icon' />
-						</a>
-						<a href={linkedin}>
-							<FaLinkedin className='icon'/>
-						</a>
-						<a href={github}>
-							<FaGithubSquare className='icon' />
-						</a>
-						<a href={insta}>
-							<FaInstagramSquare className='icon' />
-						</a>
-					</div> //footer-section*/}
+					<div className='footer-section'>
+						{twitter && (	
+							<button onClick={() => {openNewTab(twitter)}}>
+								<FaSquareXTwitter />
+							</button>
+						)}
+						{linkedinLink && (
+							<button onClick={() => {openNewTab(linkedinLink)}}>
+								<SiLinkedin/>
+							</button>
+						)}
+						{github && (
+							<button onClick={() => {openNewTab(github)}}>
+								<FaSquareGithub />
+							</button>
+						)}
+						{insta && (
+							<button onClick={() => {openNewTab(insta)}}>
+								<FaInstagramSquare />
+							</button>
+						)}
+					</div>
 				</div>
 			) : (
 				<div>
