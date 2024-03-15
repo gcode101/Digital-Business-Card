@@ -105,11 +105,11 @@ function Card() {
 							<h1>{ name }</h1>
 							<h3>{ title }</h3>
 							<div className='info-buttons'>
-								<button className='email-button' onClick={() => {window.open(emailLink, '_blank')}}>
+								<button className='btn btn-outline-secondary email-button' onClick={() => {window.open(emailLink, '_blank')}}>
 									<MdEmail />
 									Email
 								</button>
-								<button className='linkedin-button' onClick={() => {openNewTab(linkedinLink)}}>
+								<button className='btn btn-primary linkedin-button' onClick={() => {openNewTab(linkedinLink)}}>
 									<SiLinkedin />
 									LinkedIn
 								</button>
@@ -134,22 +134,22 @@ function Card() {
 
 					<div className='footer-section'>
 						{twitter && (	
-							<button className='icon' onClick={() => {openNewTab(twitter)}}>
+							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(twitter)}}>
 								<FaSquareXTwitter />
 							</button>
 						)}
 						{linkedinLink && (
-							<button className='icon' onClick={() => {openNewTab(linkedinLink)}}>
+							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(linkedinLink)}}>
 								<SiLinkedin/>
 							</button>
 						)}
 						{github && (
-							<button className='icon' onClick={() => {openNewTab(github)}}>
+							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(github)}}>
 								<FaSquareGithub />
 							</button>
 						)}
 						{insta && (
-							<button className='icon' onClick={() => {openNewTab(insta)}}>
+							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(insta)}}>
 								<FaInstagramSquare />
 							</button>
 						)}

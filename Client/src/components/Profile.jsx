@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Profile() {
 	return(
-		<div>
+		<div className="container profile">
 			<h1 className="text-light text-center">My Profile</h1>
 
 			<div className="d-grid gap-2 col-6 mx-auto">

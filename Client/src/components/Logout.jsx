@@ -17,7 +17,7 @@ function Logout() {
 	}
 
 	return (
-		<li onClick={handleLogout}><Link>Logout</Link></li>
+		<li className="nav-item" onClick={handleLogout}><Link className="nav-link fw-bold quicksand-font text-light">Logout</Link></li>
 	)
 }
 

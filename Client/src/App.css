@@ -44,12 +44,43 @@ body {
   background-color: #23252C;
 }
 
+.card{
+  margin-top: 150px;
+}
+
+/*Navbar*/
+
+.navbar{
+  background-color: #151522;
+  margin: 30px;
+  border-radius: 20px;
+}
+
+/*Home Component*/
+
+.intro-slide{
+  margin-top: 150px;
+  width: 550px;
+}
+
+.subtitle{
+  font-size: .9em;
+}
+
+/*Profile Component*/
+
+.profile{
+  margin-top: 150px;
+}
+
+
 /*Card Component*/
 
 .card-container{
   display: flex;
   justify-content: center;
-  padding-top: 44px;  
+  padding-top: 44px;
+  margin-top: 150px;
 }
 
 .info-section {
