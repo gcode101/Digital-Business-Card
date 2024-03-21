@@ -11,11 +11,11 @@ function Navbar() {
 						DBCards
 					</span>
 				</Link>
-				<button className="navbar-toggler" type="button" data-bs-target="#navbarCollapse" data-bs-toggle="collapse">
-					<span className="navbar-toggler-icon text-light"></span>
+				<button className="navbar-toggler navbar-dark" type="button" data-bs-target="#navbarCollapse" data-bs-toggle="collapse">
+					<span className="navbar-toggler-icon"></span>
 				</button>
 				<div id="navbarCollapse" className="collapse navbar-collapse justify-content-end align-center">
-			      <ul class="navbar-nav">
+			      <ul className="navbar-nav">
 			        <li className="nav-item"><Link className="nav-link fw-bold quicksand-font text-light" to="/">Home</Link></li>
 			        <li className="nav-item"><Link className="nav-link fw-bold quicksand-font text-light" to="/signup">Signup</Link></li>
 			        <li className="nav-item"><Link className="nav-link fw-bold quicksand-font text-light" to="/login">Login</Link></li>

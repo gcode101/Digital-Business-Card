@@ -65,7 +65,7 @@ function CardBuild() {
 	return(
 		<div>
 			<h1 className="text-center text-light">Build your Digital Card</h1>
-			<div className="container mt-5">
+			<div className="container">
 				<div className="row justify-content-center">
 					<div className="col-md-6">
 						<div className="card">

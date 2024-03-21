@@ -11,7 +11,7 @@ function Home() {
 							With our easy-to-use platform, you can create a professional and stylish business 
 							card that showcases you. 
 						</p>
-						<Link to="/login" className="btn btn-primary mt-5">Let's Get Started</Link>
+						<Link to="/signup" className="btn btn-primary mt-5">Let's Get Started</Link>
 					</div>
 				</div>
 			</div>

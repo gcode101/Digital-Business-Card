@@ -5,18 +5,68 @@ import { useNavigate } from 'react-router-dom';
 
 function Signup() {
 
-	const [name, setName] = useState();
-	const [email, setEmail] = useState();
-	const [password, setPassword] = useState();
-	const navigate = useNavigate(); 
+	const [formData, setFormData] = useState({
+		name: '',
+		email: '',
+		password: '',
+		confirmPass: ''
+	});
+
+	const [errors, setErrors] = useState({});
+	const navigate = useNavigate();
+
+	//Error validation function
+	const validateForm = (data) => {
+		let formErrors = {}
+
+		if(!data.name.trim()){
+			formErrors.name = 'Name is required'
+		}
+
+		if(!data.email.trim()){
+			formErrors.email = 'Email is required';
+		}else if(!/\S+@\S+\.\S+/.test(data.email)){
+			formErrors.email = 'Invalid email';
+		}
+
+		if(!data.password.trim()){
+			formErrors.password = 'Password is required';
+		}else if(data.password.length < 8){
+			formErrors.password = 'Password needs to be at least 8 characters long';
+		}
+
+		if(data.confirmPass !== data.password){
+			formErrors.confirmPass = 'Passwords do not match'
+		}
+
+		return formErrors;
+	}
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData({
+			...formData,
+			[name]: value
+		});
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		axios.post('http://localhost:3000/register', {name, email, password})
-		.then(result => {console.log(result)
-			navigate('/login')
-		})
-		.catch(err => console.log(err))
+		const validationErrors = validateForm(formData);
+
+		if(Object.keys(validationErrors).length === 0){
+			const { name, email, password } = formData;
+
+			axios.post('http://localhost:3000/register', {name, email, password})
+			.then(result => {console.log(result)
+				localStorage.setItem('registrationSuccess', 'Registration successful. Please log in.');
+				navigate('/login');
+			})
+			.catch(err => console.log(err))
+			console.log('Form submitted successfully');
+		}else{
+			setErrors(validationErrors);
+		}
 	}
 
 	return (
@@ -35,9 +85,12 @@ function Signup() {
 	                  	type="text" 
 	                  	className="form-control mt-2" 
 	                  	id="name" 
+	                  	name="name"
+	                  	value={ formData.name }
 	                  	placeholder="Enter your name"
-	                  	onChange={ (e) => {setName(e.target.value)} }
+	                  	onChange={ handleChange }
 	                  />
+	                  { errors.name && <span className="errorMsg">{ errors.name }</span> }
 	                </div>
 	                <div className="form-group mt-2">
 	                  <label htmlFor="email">Email</label>
@@ -45,19 +98,38 @@ function Signup() {
 		                type="email" 
 		                className="form-control mt-2" 
 		                id="email" 
+		                name="email"
+		                value={ formData.email }
 		                placeholder="Enter your email"
-		                onChange={ (e) => {setEmail(e.target.value)} }
+		                onChange={ handleChange }
 	                  />
+	                  { errors.email && <span className="errorMsg">{ errors.email }</span> }
 	                </div>
 	                <div className="form-group mt-2">
 	                  <label htmlFor="password">Password</label>
 	                  <input 
 		                type="password" 
 		                className="form-control mt-2" 
-		                id="password" 
+		                id="password"
+		                name="password"
+		                value={ formData.password }
 		                placeholder="Enter your password" 
-		                onChange={ (e) => {setPassword(e.target.value)} }
+		                onChange={ handleChange }
 	                  />
+	                  { errors.password && <span className="errorMsg">{ errors.password }</span> }
+	                </div>
+	                <div className="form-group mt-2">
+	                  <label htmlFor="confirmPass">Confirm Password</label>
+	                  <input 
+		                type="password" 
+		                className="form-control mt-2" 
+		                id="confirmPass"
+		                name="confirmPass"
+		                value={ formData.confirmPass }
+		                placeholder="Enter your password" 
+		                onChange={ handleChange }
+	                  />
+	                  { errors.confirmPass && <span className="errorMsg">{ errors.confirmPass }</span> }
 	                </div>
 	                <button type="submit" className="btn btn-primary mt-3">Register</button>
 	              </form>

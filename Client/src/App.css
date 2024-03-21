@@ -48,6 +48,11 @@ body {
   margin-top: 150px;
 }
 
+.errorMsg{
+  color: red;
+  font-weight: 200;
+}
+
 /*Navbar*/
 
 .navbar{

@@ -101,9 +101,9 @@ function Card() {
 				<div className="full-card">
 					<div className='info-section'>
 						<img src={`http://localhost:3000/${photo}`} className='img-fluid' alt='photo'/>
-						<div className='info'>
+						<div className='info m-4'>
 							<h1>{ name }</h1>
-							<h3>{ title }</h3>
+							<h3 className="mt-2">{ title }</h3>
 							<div className='info-buttons'>
 								<button className='btn btn-outline-secondary email-button' onClick={() => {window.open(emailLink, '_blank')}}>
 									<MdEmail />
