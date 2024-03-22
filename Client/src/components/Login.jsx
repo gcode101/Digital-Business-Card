@@ -5,25 +5,63 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
-	const [email, setEmail] = useState();
-	const [password, setPassword] = useState();
-	const navigate = useNavigate();
+	const [formData, setFormData] = useState({
+		email: '',
+		password: ''
+	});
 
+	const navigate = useNavigate();
 	const [successMsg, setSuccessMsg] = useState();
+	const [errors, setErrors] = useState({});
+
 
 	axios.defaults.withCredentials = true;
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		axios.post('http://localhost:3000/login', { email, password })
-		.then(result => {
-			console.log(result)
-			if(result.data === "success"){
-				navigate('/profile')
-			}
-		})
-		.catch(err => console.log(err))
+		const validationErrors = validateForm(formData);
+
+		if(Object.keys(validationErrors).length === 0){
+			const { email, password } = formData;
+
+			axios.post('http://localhost:3000/login', { email, password })
+			.then(result => {
+				console.log(result)
+				if(result.data === "success"){
+					navigate('/profile')
+				}else if (result.data === "user not found"){
+					setErrors({
+						email: result.data
+					});
+				}else if(result.data === "incorrect password"){
+					setErrors({
+						password: result.data
+					});
+				}
+			})
+			.catch(err => console.log(err))
+		}else{
+			setErrors(validationErrors);
+		}
 	}
 
+	const validateForm = (data) => {
+		let formErrors = {};
+
+		if(!data.email.trim() || !data.password.trim()){
+			formErrors.all = "All fields are required";
+		}
+		return formErrors;
+	}
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData({
+			...formData,
+			[name]: value
+		});
+	}
+
+	//Grab success msg from localStorage after successful user registration
 	useEffect(() =>{
 		const successMessage = localStorage.getItem('registrationSuccess');
 		if(successMessage){
@@ -43,23 +81,32 @@ function Login() {
 						</div>
 						<div className="card-body">
 							<form onSubmit={handleSubmit}>
+								{ errors.all && <span className="errorMsg">{ errors.all }</span>}
 								<div className="form-group">
 									<label htmlFor="email">Email</label>
 									<input 
 										type="text"
 										className="form-control mt-2"
 										id="email"
+										name="email"
+										value={ formData.email }
 										placeholder="Enter your email"
-										onChange={ (e) => { setEmail(e.target.value) } }
+										onChange={ handleChange }
 									/>
+									<div>
+										{ errors.email && <span className="errorMsg">{ errors.email }</span>}
+									</div>
 									<label htmlFor="password">Password</label>
 									<input 
 										type="password"
 										className="form-control mt-2"
 										id="password"
+										name="password"
+										value={ formData.password }
 										placeholder="Enter your password"
-										onChange={ (e) => { setPassword(e.target.value) } }
+										onChange={ handleChange }
 									/>
+									{ errors.password && <span className="errorMsg">{ errors.password }</span>}
 								</div>
 								<button type="submit" className="btn btn-primary mt-3">Login</button>
 							</form>
