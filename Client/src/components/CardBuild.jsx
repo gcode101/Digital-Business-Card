@@ -8,21 +8,34 @@ function CardBuild() {
 
 	const [picture, setPicture] = useState();
 	const [title, setTitle] = useState();
-
 	const [linkedIn, setLinkedIn] = useState();
 	const [social, setSocialLinks] = useState([]);
-
 	const [about, setAbout] = useState();
 	const [interests, setInterests] = useState();
-
 	const [footerLink, setFooterLink] = useState('');
 	const [footer, setFooterLinks] = useState([]);
 
 	const navigate = useNavigate();
+	const [dataInput, setDataInput] = useState({});
+	const [errors, setErrors] = useState({});
 
 	const addFooterLink = () => {
 		setFooterLinks([...footer, footerLink]);
 		setFooterLink('');
+	}
+
+	const validateForm = (data) => {
+		let formErrors = {};
+
+		if(!data.file){
+			formErrors.file = "Uploading a picture is required";
+		}
+
+		if(!data.title || !data.title.trim()){
+			formErrors.title = "Title field is required";
+		}
+
+		return formErrors;
 	}
 
 	const handleSubmit = (e) => {
@@ -38,6 +51,12 @@ function CardBuild() {
 	    const socialLinks = [...social, userEmail, linkedIn];
 	    const footerLinks = [...footer, footerLink];
 
+	    setDataInput({
+	    	file: picture,
+	    	title: title
+	    });
+		const validationErrors = validateForm(dataInput);
+
 	    const formData = new FormData();
 	    formData.append('file', picture);
 	    formData.append('name', name);
@@ -52,15 +71,25 @@ function CardBuild() {
 	    });
 	    formData.append('userID', userID);
 
-		axios.post('http://localhost:3000/card', formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data'
-			}
-		})
-		.then(result => {
-			navigate("/card");
-		})
-		.catch((err) => console.log(err));
+		if(Object.keys(validationErrors).length === 0){
+			axios.post('http://localhost:3000/card', formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			})
+			.then(result => {
+				if (result.data === "Picture and title fields requried"){
+					setErrors({
+						fields: result.data
+					})
+				}else{
+					navigate("/card");
+				}
+			})
+			.catch((err) => console.log(".catch(err) => ",err));
+		}else{
+			setErrors(validationErrors);
+		}
 	}
 	return(
 		<div>
@@ -80,6 +109,9 @@ function CardBuild() {
 											placeholder="Upload your photo"
 											onChange={(e) =>  setPicture(e.target.files[0])}
 										/>
+										<div>
+											{ errors.file &&  <span className="errorMsg">{ errors.file }</span>}
+										</div>
 										<label htmlFor="title">Title</label>
 										<input 
 											type="text"
@@ -88,6 +120,9 @@ function CardBuild() {
 											placeholder="Enter your professional title"
 											onChange={(e) => { setTitle(e.target.value) }}
 										/>
+										<div>
+											{ errors.title &&  <span className="errorMsg">{ errors.title }</span>}
+										</div>
 										<label htmlFor="linkedIn">LinkedIn</label>
 										<input 
 											type="text"

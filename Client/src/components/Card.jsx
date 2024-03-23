@@ -58,7 +58,6 @@ function Card() {
 				setFooterLinks(footerLinks);
 				setCardExists(true);
 
-				console.log('footerLinks', footerLinks);
 				function getFooterLinks() {
 					footerLinks.forEach((item) => {
 						if(item.includes('twitter')){
