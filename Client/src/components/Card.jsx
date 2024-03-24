@@ -26,6 +26,8 @@ function Card() {
 	const[twitter, setTwitter] = useState('');
 	const[github, setGithub] = useState('');
 	const[insta, setInsta] = useState('');
+	const[linkedin, setLinkedin] = useState('');
+	const[emailLink, setEmailLink] = useState('');
 
 	useEffect(() => {
 		axios.get('http://localhost:3000/cardAuth')
@@ -70,7 +72,16 @@ function Card() {
 					});
 				}
 
-				getFooterLinks();
+				if(footerLinks){
+					getFooterLinks();
+				}
+
+				const lastLink = socialLinks.length - 1;
+				const linkedinLink = socialLinks[lastLink];
+				if(linkedinLink){
+					setLinkedin(linkedinLink);
+				}
+				setEmailLink(`mailto:${socialLinks[0]}`);
 			}
 
 		})
@@ -78,9 +89,6 @@ function Card() {
 			console.error('Error fetching card:', err);
 		});
 	}, []);
-
-	const linkedinLink = socialLinks[1];
-	const emailLink = `mailto:${socialLinks[0]}`;
 
 	const openNewTab = (link) => {
 		//open new tab
@@ -108,7 +116,7 @@ function Card() {
 									<MdEmail />
 									Email
 								</button>
-								<button className='btn btn-primary linkedin-button' onClick={() => {openNewTab(linkedinLink)}}>
+								<button className='btn btn-primary linkedin-button' onClick={() => {openNewTab(linkedin)}}>
 									<SiLinkedin />
 									LinkedIn
 								</button>
@@ -137,8 +145,8 @@ function Card() {
 								<FaSquareXTwitter />
 							</button>
 						)}
-						{linkedinLink && (
-							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(linkedinLink)}}>
+						{linkedin && (
+							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(linkedin)}}>
 								<SiLinkedin/>
 							</button>
 						)}

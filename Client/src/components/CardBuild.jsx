@@ -45,17 +45,20 @@ function CardBuild() {
 		const userID = tokenPayload.userID;
 		const name = tokenPayload.name;
 
+		if(!linkedIn){
+			setLinkedIn('');
+		}
+
 	    setSocialLinks(prevSocialLinks => [...prevSocialLinks, userEmail, linkedIn]);
 	    setFooterLinks(prevFooterLinks => [...prevFooterLinks, footerLink]);
 
 	    const socialLinks = [...social, userEmail, linkedIn];
 	    const footerLinks = [...footer, footerLink];
 
-	    setDataInput({
-	    	file: picture,
+		const validationErrors = validateForm({
+			file: picture,
 	    	title: title
-	    });
-		const validationErrors = validateForm(dataInput);
+		});
 
 	    const formData = new FormData();
 	    formData.append('file', picture);

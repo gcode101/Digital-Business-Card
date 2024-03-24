@@ -1,18 +1,31 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getTokenPayload } from '../services/TokenPayload';
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 function Profile() {
 
 	const [user, setUser] = useState();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		const { name } = getTokenPayload();
-		const fullNameArray = name.split(' ');
-		const firstName = fullNameArray[0];
+		axios.get('http://localhost:3000/cardAuth')
+		.then(result => {
+			console.log(result);
+			if(result.data !== 'success'){
+				navigate('/login')
+			}
+		})
+		.catch(err => console.log(err));
 
-		setUser(firstName);
+		const { name } = getTokenPayload();
+		if(name){
+			const fullNameArray = name.split(' ');
+			const firstName = fullNameArray[0];
+
+			setUser(firstName);
+		}
 	},[]);
 
 	return(
