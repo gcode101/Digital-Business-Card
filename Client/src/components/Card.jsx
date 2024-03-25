@@ -78,7 +78,7 @@ function Card() {
 
 				const lastLink = socialLinks.length - 1;
 				const linkedinLink = socialLinks[lastLink];
-				if(linkedinLink){
+				if(linkedinLink !== 'undefined'){
 					setLinkedin(linkedinLink);
 				}
 				setEmailLink(`mailto:${socialLinks[0]}`);

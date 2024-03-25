@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-function Login() {
+function Login({ onLogin }) {
 
 	const [formData, setFormData] = useState({
 		email: '',
@@ -27,7 +27,8 @@ function Login() {
 			.then(result => {
 				console.log(result)
 				if(result.data === "success"){
-					navigate('/profile')
+					onLogin();
+					navigate('/profile');
 				}else if (result.data === "user not found"){
 					setErrors({
 						email: result.data

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function Logout() {
@@ -16,9 +16,7 @@ function Logout() {
 		.catch(err => {console.log(err)})
 	}
 
-	return (
-		<li className="nav-item" onClick={handleLogout}><Link className="nav-link fw-bold quicksand-font text-light">Logout</Link></li>
-	)
+	return null;
 }
 
 export default Logout;

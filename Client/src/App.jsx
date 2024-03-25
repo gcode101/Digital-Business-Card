@@ -13,18 +13,31 @@ import Profile from './components/Profile'
 import CardBuild from './components/CardBuild'
 
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+  	setIsLoggedIn(false);
+  	<Logout />
+  }
+
+  const handleLogin = () => {
+  	setIsLoggedIn(true);
+
+  }
+
   return (
-  	<Router>
-  		<Navbar />
-	  	<Routes>
-	    	<Route exact path="/" Component={Home} />
-	    	<Route path="/card" Component={Card}/>
-	    	<Route path="/signup" Component={Signup}/>
-	    	<Route path="/login" Component={Login}/>
-	    	<Route path="/profile" Component={Profile}/>
-	    	<Route path="/card-build" Component={CardBuild}/>
+    <Router>
+        <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+		<Routes>
+		    <Route exact path="/" element={<Home />} />
+		    <Route path="/card" element={isLoggedIn ? <Card /> : <Login onLogin={handleLogin} />} />
+		    <Route path="/signup" element={<Signup />} />
+		    <Route path="/login" element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Profile />} />
+		    <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login onLogin={handleLogin} />} />
+		    <Route path="/card-build" element={isLoggedIn ? <CardBuild /> : <Login onLogin={handleLogin} />} />
 		</Routes>
-	</Router>
+    </Router>
   )
 }
 
