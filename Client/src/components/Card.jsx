@@ -103,67 +103,77 @@ function Card() {
 
 
 	return (
-		<div className="card-container">
+		<div>
 			{cardExists ? (
-				<div className="full-card">
-					<div className='info-section'>
-						<img src={`http://localhost:3000/${photo}`} className='img-fluid' alt='photo'/>
-						<div className='info m-4'>
-							<h1>{ name }</h1>
-							<h3 className="mt-2">{ title }</h3>
-							<div className='info-buttons'>
-								<button className='btn btn-outline-secondary email-button' onClick={() => {window.open(emailLink, '_blank')}}>
-									<MdEmail />
-									Email
-								</button>
-								<button className='btn btn-primary linkedin-button' onClick={() => {openNewTab(linkedin)}}>
-									<SiLinkedin />
-									LinkedIn
-								</button>
+				<>
+					<div className="card-container">
+						<div className="edit-button">
+							<Link to="/update-card" className="btn btn-outline-primary">Edit</Link>
+						</div>
+						<div className="full-card">
+							<div className='info-section'>
+								<img src={`http://localhost:3000/${photo}`} className='img-fluid' alt='photo'/>
+								<div className='info m-4'>
+									<h1>{ name }</h1>
+									<h3 className="mt-2">{ title }</h3>
+									<div className='info-buttons'>
+										<button className='btn btn-outline-secondary email-button' onClick={() => {window.open(emailLink, '_blank')}}>
+											<MdEmail />
+											Email
+										</button>
+										<button className='btn btn-primary linkedin-button' onClick={() => {openNewTab(linkedin)}}>
+											<SiLinkedin />
+											LinkedIn
+										</button>
+									</div>
+								</div>
+							</div>
+
+							<div className='about-section'>
+								<div className='about-info'>
+									<h2>About</h2>
+									<p>{ about }</p>
+								</div>
+							</div>
+
+							<div className='inte-section'>
+								<div className='inte-info'>
+									<h2>Interests</h2>
+									<p>{ interests }</p>
+								</div>
+							</div> 
+						
+
+							<div className='footer-section'>
+								{twitter && (	
+									<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(twitter)}}>
+										<FaSquareXTwitter />
+									</button>
+								)}
+								{linkedin && (
+									<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(linkedin)}}>
+										<SiLinkedin/>
+									</button>
+								)}
+								{github && (
+									<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(github)}}>
+										<FaSquareGithub />
+									</button>
+								)}
+								{insta && (
+									<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(insta)}}>
+										<FaInstagramSquare />
+									</button>
+								)}
 							</div>
 						</div>
 					</div>
-
-					<div className='about-section'>
-						<div className='about-info'>
-							<h2>About</h2>
-							<p>{ about }</p>
-						</div>
+					<div className="delete-button">
+						<button className="btn btn-outline-danger">Delete Card</button>
 					</div>
-
-					<div className='inte-section'>
-						<div className='inte-info'>
-							<h2>Interests</h2>
-							<p>{ interests }</p>
-						</div>
-					</div> 
-				
-
-					<div className='footer-section'>
-						{twitter && (	
-							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(twitter)}}>
-								<FaSquareXTwitter />
-							</button>
-						)}
-						{linkedin && (
-							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(linkedin)}}>
-								<SiLinkedin/>
-							</button>
-						)}
-						{github && (
-							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(github)}}>
-								<FaSquareGithub />
-							</button>
-						)}
-						{insta && (
-							<button className='btn btn-outline-secondary icon' onClick={() => {openNewTab(insta)}}>
-								<FaInstagramSquare />
-							</button>
-						)}
-					</div>
-				</div>
+				</>
 			) : (
-				<div>
+				<div className="no-card-msg">
 					<h2 className="text-light mb-5">Looks like you don't have a card yet.</h2>
 					<Link to="/card-build" className="btn btn-primary">Create your Digital Card</Link>
 				</div>

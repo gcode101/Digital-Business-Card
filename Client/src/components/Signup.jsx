@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios"; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function Signup() {
@@ -131,6 +131,7 @@ function Signup() {
 	                  />
 	                  { errors.confirmPass && <span className="errorMsg">{ errors.confirmPass }</span> }
 	                </div>
+	                <p className="form-reminder">Already registered? <Link to="/login">Log in</Link></p>
 	                <button type="submit" className="btn btn-primary mt-3">Register</button>
 	              </form>
 	            </div>

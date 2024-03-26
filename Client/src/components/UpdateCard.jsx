@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getTokenPayload } from '../services/TokenPayload';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,9 @@ function CardBuild() {
 
 	const navigate = useNavigate();
 	const [errors, setErrors] = useState({});
+	const tokenPayload = getTokenPayload();
+	const userID = tokenPayload.userID;
+
 
 	const addFooterLink = () => {
 		setFooterLinks([...footer, footerLink]);
@@ -37,11 +40,35 @@ function CardBuild() {
 		return formErrors;
 	}
 
+	useEffect(() => {
+		axios.get(`http://localhost:3000/card/${userID}`)
+		.then(result => {
+			if (result) {
+				const {
+					picture, 
+					title,
+					socialLinks,
+					about,
+					interests,
+					footerLinks
+				} = result.data;
+
+				setPicture(picture);
+				setTitle(title);
+				setSocialLinks(socialLinks);
+				setAbout(about);
+				setInterests(interests);
+				setFooterLinks(footerLinks);
+			}
+		})
+		.catch(err => {
+			console.error('Error fetching card:', err);
+		});
+	},[]);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const tokenPayload = getTokenPayload();
 		const userEmail = tokenPayload.email;
-		const userID = tokenPayload.userID;
 		const name = tokenPayload.name;
 
 		if(!linkedIn){
@@ -95,7 +122,6 @@ function CardBuild() {
 	}
 	return(
 		<div>
-			<h1 className="text-center text-light">Build your Digital Card</h1>
 			<div className="container">
 				<div className="row justify-content-center">
 					<div className="col-md-6">
@@ -120,6 +146,7 @@ function CardBuild() {
 											className="form-control mt-2"
 											id="title"
 											placeholder="Enter your professional title"
+											value={ title }
 											onChange={(e) => { setTitle(e.target.value) }}
 										/>
 										<div>
@@ -140,6 +167,7 @@ function CardBuild() {
 											className="form-control mt-2"
 											id="about"
 											placeholder="Write a brief text about yourself"
+											value={ about }
 											onChange={(e) => { setAbout(e.target.value) }}
 										>
 										</textarea>
@@ -150,6 +178,7 @@ function CardBuild() {
 											className="form-control mt-2"
 											id="interests"
 											placeholder="Write a brief text about your interests"
+											value={ interests }
 											onChange={(e) => { setInterests(e.target.value) }}
 										>
 										</textarea>
@@ -169,7 +198,7 @@ function CardBuild() {
 											))}
 										</div>
 									</div>
-									<button type="submit" className="btn btn-primary mt-4 center">Create Card</button>
+									<button type="submit" className="btn btn-primary mt-4 center">Update</button>
 								</form>
 							</div>
 						</div>

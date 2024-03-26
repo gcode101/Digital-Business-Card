@@ -46,11 +46,16 @@ body {
 
 .card{
   margin-top: 150px;
+  margin-bottom: 150px;
 }
 
 .errorMsg{
   color: red;
   font-weight: 200;
+}
+
+.form-reminder{
+  margin-top: 20px;
 }
 
 /*Navbar*/
@@ -238,8 +243,29 @@ body {
   font-size: 32px;
 }
 
-/*Signup Component*/
+.edit-button{
+  position: absolute;
+  margin: 18px 0 0 280px;
+}
 
+.delete-button{
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 183px 0;
+}
+
+.delete-button button{
+  width: 360px;
+}
+
+.no-card-msg{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+}
+
+/*Signup Component*/
 
 
 

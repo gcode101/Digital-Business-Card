@@ -11,6 +11,7 @@ import Login from './components/Login'
 import Logout from './components/Logout'
 import Profile from './components/Profile'
 import CardBuild from './components/CardBuild'
+import Update from './components/UpdateCard'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
 		    <Route path="/login" element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Profile />} />
 		    <Route path="/profile" element={isLoggedIn ? <Profile /> : <Login onLogin={handleLogin} />} />
 		    <Route path="/card-build" element={isLoggedIn ? <CardBuild /> : <Login onLogin={handleLogin} />} />
+		    <Route path="/update-card" element={isLoggedIn ? <Update/> : <Login onLogin={handleLogin}/>} />
 		</Routes>
     </Router>
   )

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function Login({ onLogin }) {
@@ -109,6 +109,7 @@ function Login({ onLogin }) {
 									/>
 									{ errors.password && <span className="errorMsg">{ errors.password }</span>}
 								</div>
+								<p className="form-reminder">Dont have an account? <Link to="/signup">Sign up</Link></p>
 								<button type="submit" className="btn btn-primary mt-3">Login</button>
 							</form>
 						</div>
