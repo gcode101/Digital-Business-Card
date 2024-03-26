@@ -80,13 +80,8 @@ function CardBuild() {
 				}
 			})
 			.then(result => {
-				if (result.data === "Picture and title fields requried"){
-					setErrors({
-						fields: result.data
-					})
-				}else{
-					navigate("/card");
-				}
+				console.log(result);
+				navigate("/card");
 			})
 			.catch((err) => console.log(".catch(err) => ",err));
 		}else{

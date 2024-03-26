@@ -19,25 +19,51 @@ function CardBuild() {
 	const [errors, setErrors] = useState({});
 	const tokenPayload = getTokenPayload();
 	const userID = tokenPayload.userID;
+	const userEmail = tokenPayload.email;
+	const name = tokenPayload.name;
+	const [editIndex, setEditIndex] = useState(null);
 
+	const addFooterLink = (e) => {
+		e.preventDefault();
+		if (editIndex !== null){
+			const newFooter = [...footer];
+			newFooter[editIndex] = footerLink;
 
-	const addFooterLink = () => {
-		setFooterLinks([...footer, footerLink]);
-		setFooterLink('');
+			setFooterLinks(newFooter);
+			setEditIndex(null);
+			setFooterLink('');
+		}else {
+			setFooterLinks([...footer, footerLink]);
+			setFooterLink('');
+		}
+	}
+
+	const deleteLink = (index, e) => {
+		e.preventDefault();
+		const newFooter = [...footer];
+		newFooter.splice(index, 1);
+		setFooterLinks(newFooter);
 	}
 
 	const validateForm = (data) => {
 		let formErrors = {};
-
-		if(!data.file){
-			formErrors.file = "Uploading a picture is required";
-		}
-
 		if(!data.title || !data.title.trim()){
 			formErrors.title = "Title field is required";
 		}
 
 		return formErrors;
+	}
+
+	const handleEdit = (index, e) => {
+		e.preventDefault();
+		setFooterLink(footer[index]);
+		setEditIndex(index);
+	}
+
+	const cancelFooterUpdate = (e) => {
+		e.preventDefault();
+		setEditIndex(null);
+		setFooterLink('');
 	}
 
 	useEffect(() => {
@@ -68,8 +94,6 @@ function CardBuild() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const userEmail = tokenPayload.email;
-		const name = tokenPayload.name;
 
 		if(!linkedIn){
 			setLinkedIn('');
@@ -82,13 +106,10 @@ function CardBuild() {
 	    const footerLinks = [...footer, footerLink];
 
 		const validationErrors = validateForm({
-			file: picture,
-	    	title: title
+	    	title
 		});
-
 	    const formData = new FormData();
 	    formData.append('file', picture);
-	    formData.append('name', name);
 	    formData.append('title', title);
 	    socialLinks.forEach(link => {
 	    	formData.append('socialLinks[]', link);
@@ -98,22 +119,16 @@ function CardBuild() {
 	    footerLinks.forEach((link) =>{
 	    	formData.append('footerLinks[]', link);
 	    });
-	    formData.append('userID', userID);
 
 		if(Object.keys(validationErrors).length === 0){
-			axios.post('http://localhost:3000/card', formData, {
+			axios.put(`http://localhost:3000/card/${userID}`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}
 			})
 			.then(result => {
-				if (result.data === "Picture and title fields requried"){
-					setErrors({
-						fields: result.data
-					})
-				}else{
-					navigate("/card");
-				}
+				console.log(result);
+				navigate("/card");
 			})
 			.catch((err) => console.log(".catch(err) => ",err));
 		}else{
@@ -129,13 +144,13 @@ function CardBuild() {
 							<div className="card-body">
 								<form onSubmit={handleSubmit}>
 									<div className="from-group">
-										<label htmlFor="picture">Picture</label>
+										<label htmlFor="picture">Update Picture</label>
 										<input 
 											type="file"
 											className="form-control mt-2"
 											id="picture"
 											placeholder="Upload your photo"
-											onChange={(e) =>  setPicture(e.target.files[0])}
+											onChange={(e) => setPicture(e.target.files[0])}
 										/>
 										<div>
 											{ errors.file &&  <span className="errorMsg">{ errors.file }</span>}
@@ -192,10 +207,19 @@ function CardBuild() {
 											onChange={(e) => { setFooterLink(e.target.value) }}
 										/>
 										<div>
-											<div onClick={addFooterLink} className="btn btn-outline-primary mt-2">Add another link</div>
-											{ footer.map((link, index) => (
-												<div key={index}>{link}</div>
-											))}
+											<button onClick={addFooterLink} className="btn btn-outline-primary mt-2">
+												{editIndex === null ? 'Add another link' : 'Update link'}
+											</button>
+											{editIndex !== null && (
+												<button onClick={cancelFooterUpdate} className="btn btn-outline-secondary mt-2 mx-2">Cancel</button>
+											)}
+											{editIndex === null && (footer.map((link, index) => (
+												<div key={index}>
+													{link}
+													{link && <button className="btn btn-link" onClick={(e) => handleEdit(index, e)}>Edit</button>}
+													{link && <a href="" className="link-danger" onClick={(e) => deleteLink(index, e)}>Delete</a>}
+												</div>
+											)))}
 										</div>
 									</div>
 									<button type="submit" className="btn btn-primary mt-4 center">Update</button>

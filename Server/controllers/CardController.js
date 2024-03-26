@@ -45,6 +45,55 @@ const createCard = (req, res) => {
         });
 }
 
+const updateCard = (req, res) => {
+	const { 
+		picture,
+		title,
+		socialLinks,
+		about,
+		interests,
+		footerLinks,
+	} = req.body;
+
+	let picturePath = '';
+	const photoUpload = req.file;
+
+	if(photoUpload){
+		picturePath = photoUpload.path.replace(/^public\//, '');
+	}else{
+		picturePath = picture;
+	}
+	const { userID } = req.params;
+
+	CardModel.findOneAndUpdate({ userID }, {
+		picture: picturePath,
+		title,
+		socialLinks,
+		about,
+		interests,
+		footerLinks
+	})
+	.then(card => {
+		if(!card){
+			return res.status(404).json({ message: 'Card not found' })
+		}
+		res.json(card);
+	})
+	.catch((err) => {
+            if (err.response) {
+                console.error("Server responded with status code:", err.response.status);
+                console.error("Error message:", err.response.data);
+                res.status(err.response.status).send(err.response.data);
+            } else if (err.request) {
+                console.error("No response received:", err.request);
+                res.status(500).send("No response received from the server. Please try again later.");
+            } else {
+                console.error("Request setup error:", err.message);
+                res.status(500).send("An error occurred while setting up the request. Please try again later.");
+            }
+    });
+}
+
 const getCard = (req, res) => {
 	const { userID } = req.params;
 	CardModel.findOne({ userID })
@@ -62,5 +111,6 @@ const getCard = (req, res) => {
 
 module.exports = {
 	createCard,
-	getCard
+	getCard,
+	updateCard
 }
