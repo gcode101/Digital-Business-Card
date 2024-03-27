@@ -101,6 +101,18 @@ function Card() {
 		}
 	}
 
+	const deleteCard = () => {
+		if(window.confirm("Are you sure you want to delete your card?")){
+			axios.delete(`http://localhost:3000/card/${userID}`)
+			.then(res => {
+				window.alert('Card deleted successfully');
+				console.log('Card deleted successfully', res);
+				navigate('/profile');
+			})
+			.catch(err => console.log('Error deleting card: ',err))
+		}
+	}
+
 
 	return (
 		<div>
@@ -169,7 +181,7 @@ function Card() {
 						</div>
 					</div>
 					<div className="delete-button">
-						<button className="btn btn-outline-danger">Delete Card</button>
+						<button className="btn btn-outline-danger" onClick={ deleteCard }>Delete Card</button>
 					</div>
 				</>
 			) : (

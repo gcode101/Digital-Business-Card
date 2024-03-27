@@ -94,6 +94,13 @@ const updateCard = (req, res) => {
     });
 }
 
+const deleteCard = (req, res) => {
+	const { userID } = req.params;
+	CardModel.findOneAndDelete({ userID })
+	.then(res => res.json(res))
+	.catch(err => res.json(err))
+}
+
 const getCard = (req, res) => {
 	const { userID } = req.params;
 	CardModel.findOne({ userID })
@@ -112,5 +119,10 @@ const getCard = (req, res) => {
 module.exports = {
 	createCard,
 	getCard,
-	updateCard
+	updateCard,
+	deleteCard
 }
+
+
+
+

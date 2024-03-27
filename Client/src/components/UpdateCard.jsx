@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getTokenPayload } from '../services/TokenPayload';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function CardBuild() {
@@ -70,6 +70,7 @@ function CardBuild() {
 		axios.get(`http://localhost:3000/card/${userID}`)
 		.then(result => {
 			if (result) {
+				console.log(result);
 				const {
 					picture, 
 					title,
@@ -82,6 +83,7 @@ function CardBuild() {
 				setPicture(picture);
 				setTitle(title);
 				setSocialLinks(socialLinks);
+				setLinkedIn(socialLinks[1]);
 				setAbout(about);
 				setInterests(interests);
 				setFooterLinks(footerLinks);
@@ -173,6 +175,7 @@ function CardBuild() {
 											className="form-control mt-2"
 											id="linkedIn"
 											placeholder="Enter your LinkedIn link"
+											value={ linkedIn }
 											onChange={(e) => { setLinkedIn(e.target.value) }}
 										/>
 										<label htmlFor="about">About</label>
@@ -223,6 +226,7 @@ function CardBuild() {
 										</div>
 									</div>
 									<button type="submit" className="btn btn-primary mt-4 center">Update</button>
+									<Link to="/card" className="btn btn-secondary mt-4 mx-2 center">Cancel</Link>
 								</form>
 							</div>
 						</div>

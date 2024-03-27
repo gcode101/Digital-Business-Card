@@ -188,7 +188,7 @@ body {
 
 .about-info {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   width: 100%;
   font-family: 'Inter';
   font-style: normal;
@@ -212,7 +212,7 @@ body {
 
 .inte-info {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   width: 100%;
   font-family: 'Inter';
   font-style: normal;
