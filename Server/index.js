@@ -45,3 +45,5 @@ app.delete('/card/:userID', verifyToken, deleteCard);
 app.listen(port, () => {
 	console.log(`server running on port ${port}`);
 });
+
+module.exports = app;
