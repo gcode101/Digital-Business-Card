@@ -1,8 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const port = process.env.PORT || 3000;
-const { dburl } = require("./config");
+const dburl = process.env.DB_URL;
 const cookieParser = require("cookie-parser");
 const { createUser, login, logout } = require("./controllers/UserController");
 const { verifyToken } = require("./services/auth");
@@ -11,7 +12,7 @@ const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./
 
 const app = express();
 app.use(cors({
-	origin: "*",
+	origin: "http://localhost:5173",
 	methods: ["GET", "POST", "PUT", "DELETE"],
 	credentials: true
 }));

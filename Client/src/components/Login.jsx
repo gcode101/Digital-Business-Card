@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { getApiUrl } from '../services/ApiUrl';
 
 
 function Login({ onLogin }) {
@@ -13,6 +14,7 @@ function Login({ onLogin }) {
 	const navigate = useNavigate();
 	const [successMsg, setSuccessMsg] = useState();
 	const [errors, setErrors] = useState({});
+	const apiUrl = getApiUrl();
 
 
 	axios.defaults.withCredentials = true;
@@ -22,8 +24,7 @@ function Login({ onLogin }) {
 
 		if(Object.keys(validationErrors).length === 0){
 			const { email, password } = formData;
-
-			axios.post('https://digital-business-card-api.vercel.app/login', { email, password })
+			axios.post(`${apiUrl}/login`, { email, password })
 			.then(result => {
 				console.log(result)
 				if(result.data === "success"){

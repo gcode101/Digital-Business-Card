@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { getTokenPayload } from '../services/TokenPayload';
+import { getApiUrl } from '../services/ApiUrl';
 import { useNavigate, Link } from 'react-router-dom';
 
 
@@ -17,6 +18,7 @@ function CardBuild() {
 
 	const navigate = useNavigate();
 	const [errors, setErrors] = useState({});
+	const apiUrl = getApiUrl();
 
 	const addFooterLink = () => {
 		setFooterLinks([...footer, footerLink]);
@@ -74,7 +76,7 @@ function CardBuild() {
 	    formData.append('userID', userID);
 
 		if(Object.keys(validationErrors).length === 0){
-			axios.post('https://digital-business-card-api.vercel.app/card', formData, {
+			axios.post(`${apiUrl}/card`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}

@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { getTokenPayload } from '../services/TokenPayload';
+import { getApiUrl } from '../services/ApiUrl';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import QRCode from 'qrcode.react'
@@ -12,10 +13,11 @@ function Profile() {
 	const [cardID, setCardID] = useState();
 	const [photo, setPhoto] = useState();
 	const navigate = useNavigate();
+	const apiUrl = getApiUrl();
 	
 	axios.defaults.withCredentials = true;
 	useEffect(() => {
-		axios.get('https://digital-business-card-api.vercel.app/cardAuth')
+		axios.get(`${apiUrl}/cardAuth`)
 		.then(result => {
 			console.log(result);
 			if(result.data !== 'success'){
@@ -32,7 +34,7 @@ function Profile() {
 			setUser(firstName);
 		}
 
-		axios.get(`https://digital-business-card-api.vercel.app/card/${userID}`)
+		axios.get(`${apiUrl}/card/${userID}`)
 		.then(card => {
 			console.log(card);
 			setCardExists(true);

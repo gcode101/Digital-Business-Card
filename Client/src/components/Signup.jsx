@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios"; 
 import { useNavigate, Link } from 'react-router-dom';
+import { getApiUrl } from '../services/ApiUrl';
 
 
 function Signup() {
@@ -14,6 +15,7 @@ function Signup() {
 
 	const [errors, setErrors] = useState({});
 	const navigate = useNavigate();
+	const apiUrl = getApiUrl();
 
 	//Error validation function
 	const validateForm = (data) => {
@@ -57,7 +59,7 @@ function Signup() {
 		if(Object.keys(validationErrors).length === 0){
 			const { name, email, password } = formData;
 
-			axios.post('https://digital-business-card-api.vercel.app/register', {name, email, password})
+			axios.post(`${apiUrl}/register`, {name, email, password})
 			.then(result => {console.log(result)
 				localStorage.setItem('registrationSuccess', 'Registration successful. Please log in.');
 				navigate('/login');

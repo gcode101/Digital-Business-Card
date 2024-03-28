@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom'; 
 import { getTokenPayload } from '../services/TokenPayload';
+import { getApiUrl } from '../services/ApiUrl';
 import { MdEmail } from "react-icons/md";
 import { SiLinkedin } from "react-icons/si";
 import { FaSquareXTwitter } from "react-icons/fa6";
@@ -22,6 +23,7 @@ function Card() {
 	const [interests, setInterests] = useState();
 	const [footerLinks, setFooterLinks] = useState([]);
 	const [cardExists, setCardExists] = useState(false);
+	const apiUrl = getApiUrl();
 
 	const[twitter, setTwitter] = useState('');
 	const[github, setGithub] = useState('');
@@ -30,7 +32,7 @@ function Card() {
 	const[emailLink, setEmailLink] = useState('');
 
 	useEffect(() => {
-		axios.get('https://digital-business-card-api.vercel.app/cardAuth')
+		axios.get(`${apiUrl}/cardAuth`)
 		.then(result => {
 			console.log(result);
 			if(result.data !== "success"){
@@ -39,7 +41,7 @@ function Card() {
 		})
 		.catch(err => console.log(err));
 
-		axios.get(`https://digital-business-card-api.vercel.app/card/${userID}`)
+		axios.get(`${apiUrl}/card/${userID}`)
 		.then(result => {
 			if (result){
 				const { 
@@ -103,7 +105,7 @@ function Card() {
 
 	const deleteCard = () => {
 		if(window.confirm("Are you sure you want to delete your card?")){
-			axios.delete(`https://digital-business-card-api.vercel.app/card/${userID}`)
+			axios.delete(`${apiUrl}/card/${userID}`)
 			.then(res => {
 				window.alert('Card deleted successfully');
 				console.log('Card deleted successfully', res);

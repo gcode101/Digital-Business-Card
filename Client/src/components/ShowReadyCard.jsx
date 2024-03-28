@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { getApiUrl } from '../services/ApiUrl';
 import { MdEmail } from "react-icons/md";
 import { SiLinkedin } from "react-icons/si";
 import { FaSquareXTwitter } from "react-icons/fa6";
@@ -19,6 +20,7 @@ function ShowReadyCard() {
 	const [footerLinks, setFooterLinks] = useState([]);
 	const [cardExists, setCardExists] = useState(false);
 	const { id } = useParams();
+	const apiUrl = getApiUrl();
 
 	const[twitter, setTwitter] = useState('');
 	const[github, setGithub] = useState('');
@@ -27,7 +29,7 @@ function ShowReadyCard() {
 	const[emailLink, setEmailLink] = useState('');
 
 	useEffect(() => {
-		axios.get(`https://digital-business-card-api.vercel.app/showCard/${id}`)
+		axios.get(`${apiUrl}/showCard/${id}`)
 		.then(result => {
 			if (result){
 				const { 
