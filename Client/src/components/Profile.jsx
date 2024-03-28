@@ -12,7 +12,8 @@ function Profile() {
 	const [cardID, setCardID] = useState();
 	const [photo, setPhoto] = useState();
 	const navigate = useNavigate();
-
+	
+	axios.defaults.withCredentials = true;
 	useEffect(() => {
 		axios.get('https://digital-business-card-api.vercel.app/cardAuth')
 		.then(result => {
