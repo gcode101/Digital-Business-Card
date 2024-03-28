@@ -83,6 +83,26 @@ body {
   margin-top: 150px;
 }
 
+.profile-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-container{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 25px;
+}
+
+.img-container img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .link-container{
   display: flex;
   max-width: 600px;

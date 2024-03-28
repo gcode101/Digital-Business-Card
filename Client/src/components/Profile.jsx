@@ -10,6 +10,7 @@ function Profile() {
 	const [user, setUser] = useState();
 	const [cardExists, setCardExists] = useState(false);
 	const [cardID, setCardID] = useState();
+	const [photo, setPhoto] = useState();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -35,6 +36,7 @@ function Profile() {
 			console.log(card);
 			setCardExists(true);
 			setCardID(card.data._id);
+			setPhoto(card.data.picture);
 		})
 		.catch(err => console.log(err))
 
@@ -42,7 +44,12 @@ function Profile() {
 
 	return(
 		<div className="container-lg profile">
-			<h1 className="text-light text-center">Hello, { user }</h1>
+			<div className="profile-title">
+				<div className="img-container">
+					<img src={`http://localhost:3000/${photo}`} alt="photo"/>
+				</div>
+				<h1 className="text-light text-center">Hello, { user }</h1>
+			</div>
 			<div className="container-lg text-center">
 				<div className="row justify-content-center">
 					<div className="profile-buttons d-grid gap-2 col-lg col-sm">
