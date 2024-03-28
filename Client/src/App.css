@@ -107,6 +107,10 @@ body {
   border-radius: 20px;
 }
 
+.qrcode{
+  margin: 25px;
+}
+
 @media (min-width: 1200px) and (max-width: 1399px){
   .link-container{
     margin: 100px 20px;
@@ -151,14 +155,11 @@ body {
 
 @media (min-width: 501px) and (max-width: 586px){
   .link-container{
-    max-width: 300px;
-    margin: 100px 0 100px 18px;
-    padding: 10px;
+    margin: 20px 10px;
   }
 
   .profile-buttons{
-    max-width: 245px;
-    padding: 58px 10px;
+    margin: 20px 10px;
   }
 }
 

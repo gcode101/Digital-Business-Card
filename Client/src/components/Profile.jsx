@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getTokenPayload } from '../services/TokenPayload';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import QRCode from 'qrcode.react'
 
 
 function Profile() {
@@ -44,18 +45,20 @@ function Profile() {
 			<h1 className="text-light text-center">Hello, { user }</h1>
 			<div className="container-lg text-center">
 				<div className="row justify-content-center">
-					<div className="profile-buttons d-grid gap-2 col">
+					<div className="profile-buttons d-grid gap-2 col-lg col-sm">
 					  {cardExists ?
 					  	<Link to={`/show-card/${cardID}`} className="btn btn-primary mt-2">View Card</Link> :
 					  	<Link to="/card-build" className="btn btn-primary mt-2">Create your Digital Card</Link>
 					  }
 					  <Link to="/card" className="btn btn-success mt-2">Digital Card Preview</Link>
 					</div>
-					<div className="link-container col">
-						<h3 className="text-light">Use this link to share your card</h3>
-						<a href={`http://localhost:5173/show-card/${cardID}`} target="_blank" rel="noopener noreferrer">
-							{`http://localhost:5173/show-card/${cardID}`}
-						</a>
+					<div className="link-container col-lg col-sm">
+						<h3 className="text-light">{cardExists ? 
+							'Scan to share card' : 'Create your card to start sharing it'}
+						</h3>
+						{cardExists &&
+							<QRCode className="qrcode" value={`http://localhost:5173/show-card/${cardID}`} />
+						}
 					</div>
 				</div>
 			</div>
