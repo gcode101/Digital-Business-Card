@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 app.use(cors({
-	origin: ["https://digital-business-card-client.vercel.app"],
+	origin: ["https://digitalbusinesscard2024.vercel.app"],
 	methods: ["GET", "POST", "PUT", "DELETE"],
 	credentials: true
 }));
