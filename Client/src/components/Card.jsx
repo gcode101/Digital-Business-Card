@@ -30,7 +30,7 @@ function Card() {
 	const[emailLink, setEmailLink] = useState('');
 
 	useEffect(() => {
-		axios.get('http://localhost:3000/cardAuth')
+		axios.get('https://digital-business-card-api.vercel.app/cardAuth')
 		.then(result => {
 			console.log(result);
 			if(result.data !== "success"){
@@ -39,7 +39,7 @@ function Card() {
 		})
 		.catch(err => console.log(err));
 
-		axios.get(`http://localhost:3000/card/${userID}`)
+		axios.get(`https://digital-business-card-api.vercel.app/card/${userID}`)
 		.then(result => {
 			if (result){
 				const { 
@@ -103,7 +103,7 @@ function Card() {
 
 	const deleteCard = () => {
 		if(window.confirm("Are you sure you want to delete your card?")){
-			axios.delete(`http://localhost:3000/card/${userID}`)
+			axios.delete(`https://digital-business-card-api.vercel.app/card/${userID}`)
 			.then(res => {
 				window.alert('Card deleted successfully');
 				console.log('Card deleted successfully', res);

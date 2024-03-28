@@ -67,7 +67,7 @@ function CardBuild() {
 	}
 
 	useEffect(() => {
-		axios.get(`http://localhost:3000/card/${userID}`)
+		axios.get(`https://digital-business-card-api.vercel.app/card/${userID}`)
 		.then(result => {
 			if (result) {
 				console.log(result);
@@ -123,7 +123,7 @@ function CardBuild() {
 	    });
 
 		if(Object.keys(validationErrors).length === 0){
-			axios.put(`http://localhost:3000/card/${userID}`, formData, {
+			axios.put(`https://digital-business-card-api.vercel.app/card/${userID}`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}

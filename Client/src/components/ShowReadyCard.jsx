@@ -27,7 +27,7 @@ function ShowReadyCard() {
 	const[emailLink, setEmailLink] = useState('');
 
 	useEffect(() => {
-		axios.get(`http://localhost:3000/showCard/${id}`)
+		axios.get(`https://digital-business-card-api.vercel.app/showCard/${id}`)
 		.then(result => {
 			if (result){
 				const { 

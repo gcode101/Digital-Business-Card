@@ -14,7 +14,7 @@ function Profile() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		axios.get('http://localhost:3000/cardAuth')
+		axios.get('https://digital-business-card-api.vercel.app/cardAuth')
 		.then(result => {
 			console.log(result);
 			if(result.data !== 'success'){
@@ -31,7 +31,7 @@ function Profile() {
 			setUser(firstName);
 		}
 
-		axios.get(`http://localhost:3000/card/${userID}`)
+		axios.get(`https://digital-business-card-api.vercel.app/card/${userID}`)
 		.then(card => {
 			console.log(card);
 			setCardExists(true);

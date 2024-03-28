@@ -23,7 +23,7 @@ function Login({ onLogin }) {
 		if(Object.keys(validationErrors).length === 0){
 			const { email, password } = formData;
 
-			axios.post('http://localhost:3000/login', { email, password })
+			axios.post('https://digital-business-card-api.vercel.app/login', { email, password })
 			.then(result => {
 				console.log(result)
 				if(result.data === "success"){

@@ -57,7 +57,7 @@ function Signup() {
 		if(Object.keys(validationErrors).length === 0){
 			const { name, email, password } = formData;
 
-			axios.post('http://localhost:3000/register', {name, email, password})
+			axios.post('https://digital-business-card-api.vercel.app/register', {name, email, password})
 			.then(result => {console.log(result)
 				localStorage.setItem('registrationSuccess', 'Registration successful. Please log in.');
 				navigate('/login');

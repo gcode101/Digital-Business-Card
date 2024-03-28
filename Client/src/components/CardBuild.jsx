@@ -74,7 +74,7 @@ function CardBuild() {
 	    formData.append('userID', userID);
 
 		if(Object.keys(validationErrors).length === 0){
-			axios.post('http://localhost:3000/card', formData, {
+			axios.post('https://digital-business-card-api.vercel.app/card', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}
