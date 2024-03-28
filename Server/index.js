@@ -11,7 +11,7 @@ const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./
 
 const app = express();
 app.use(cors({
-	origin: ["*"],
+	origin: "*",
 	methods: ["GET", "POST", "PUT", "DELETE"],
 	credentials: true
 }));
