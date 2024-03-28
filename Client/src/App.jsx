@@ -13,6 +13,7 @@ import Profile from './components/Profile'
 import CardBuild from './components/CardBuild'
 import Update from './components/UpdateCard'
 import ShowReadyCard from './components/ShowReadyCard'
+import Footer from './components/Footer'
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
 		    <Route path="/card-build" element={isLoggedIn ? <CardBuild /> : <Login onLogin={handleLogin} />} />
 		    <Route path="/update-card" element={isLoggedIn ? <Update/> : <Login onLogin={handleLogin}/>} />
 		</Routes>
+        <Footer />
     </Router>
   )
 }

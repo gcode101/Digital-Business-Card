@@ -43,7 +43,7 @@ function Profile() {
 	},[]);
 
 	return(
-		<div className="container-lg profile">
+		<div className="container-lg main-container profile">
 			<div className="profile-title">
 				<div className="img-container">
 					<img src={`http://localhost:3000/${photo}`} alt="photo"/>

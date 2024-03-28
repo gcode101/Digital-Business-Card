@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
 	return (
-		<div className="container d-flex justify-content-center">
+		<div className="container main-container d-flex justify-content-center">
 			<div id="home" class="intro-slide">
 				<div>
 					<div class="intro-info text-center text-light">

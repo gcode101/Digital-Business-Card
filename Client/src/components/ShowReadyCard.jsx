@@ -93,7 +93,7 @@ function ShowReadyCard() {
 		<div>
 			{cardExists ? (
 				<>
-					<div className="card-container">
+					<div className="card-container main-container">
 						<div className="full-card">
 							<div className='info-section'>
 								<img src={`http://localhost:3000/${photo}`} className='img-fluid' alt='photo'/>
