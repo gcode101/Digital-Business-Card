@@ -63,7 +63,6 @@ function Signup() {
 				navigate('/login');
 			})
 			.catch(err => console.log(err))
-			console.log('Form submitted successfully');
 		}else{
 			setErrors(validationErrors);
 		}
