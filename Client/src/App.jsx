@@ -12,6 +12,7 @@ import Logout from './components/Logout'
 import Profile from './components/Profile'
 import CardBuild from './components/CardBuild'
 import Update from './components/UpdateCard'
+import ShowReadyCard from './components/ShowReadyCard'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
 		<Routes>
 		    <Route exact path="/" element={<Home />} />
+        <Route path="/show-card/:id" element={ <ShowReadyCard/> }/>
 		    <Route path="/card" element={isLoggedIn ? <Card /> : <Login onLogin={handleLogin} />} />
 		    <Route path="/signup" element={<Signup />} />
 		    <Route path="/login" element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Profile />} />

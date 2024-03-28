@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser");
 const { createUser, login, logout } = require("./controllers/UserController");
 const { verifyToken } = require("./services/auth");
 const { upload } = require("./services/imgStorage");
-const { createCard, getCard, updateCard, deleteCard } = require("./controllers/CardController");
+const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./controllers/CardController");
 
 const app = express();
 app.use(express.json());
@@ -32,6 +32,8 @@ app.get('/cardAuth', verifyToken, (req, res) => {
 });
 
 app.get('/card/:userID', verifyToken, getCard);
+
+app.get('/showCard/:id', getShowCard);
 
 app.post('/card', verifyToken, upload.single('file'), createCard);
 

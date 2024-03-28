@@ -83,14 +83,110 @@ body {
   margin-top: 150px;
 }
 
+.link-container{
+  display: flex;
+  max-width: 600px;
+  height: 300px;
+  background-color: #15152282;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 100px;
+  padding: 50px;
+  border-radius: 20px;
+}
+
+.profile-buttons{
+  max-width: 466px;
+  height: 300px;
+  background-color: #15152282;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 100px 0;
+  padding: 50px;
+  border-radius: 20px;
+}
+
+@media (min-width: 1200px) and (max-width: 1399px){
+  .link-container{
+    margin: 100px 20px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px){
+  .link-container{
+    max-width: 520px;
+    margin-right: 0;
+    margin-left: 50px;
+  }
+
+  .profile-buttons{
+    max-width: 389px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+  .link-container{
+    max-width: 360px;
+    margin-right: 0;
+    margin-left: 20px;
+  }
+
+  .profile-buttons{
+    max-width: 272px;
+  }
+}
+
+@media (min-width: 587px) and (max-width: 767px){
+  .link-container{
+    max-width: 349px;
+    margin: 100px 0 100px 25px;
+  }
+
+  .profile-buttons{
+    max-width: 245px;
+    padding: 58px 10px;
+  }
+}
+
+@media (min-width: 501px) and (max-width: 586px){
+  .link-container{
+    max-width: 300px;
+    margin: 100px 0 100px 18px;
+    padding: 10px;
+  }
+
+  .profile-buttons{
+    max-width: 245px;
+    padding: 58px 10px;
+  }
+}
+
+@media (max-width: 500px){
+  .link-container{
+    margin: 20px 0;
+  }
+
+  .profile-buttons{
+    margin: 20px 0;
+  }
+}
 
 /*Card Component*/
+
+.profile-btn{
+  margin-top: 100px;
+}
+
+.profile-btn a{
+  width: 360px;
+}
 
 .card-container{
   display: flex;
   justify-content: center;
   padding-top: 44px;
-  margin-top: 150px;
+  margin-top: 50px;
 }
 
 .info-section {
@@ -263,6 +359,17 @@ body {
   flex-direction: column;
   align-items: center;
   margin-top: 150px;
+}
+
+.no-card-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-card-buttons a{
+  margin: 5px;
 }
 
 /*Signup Component*/

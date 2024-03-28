@@ -1,18 +1,14 @@
 import React from 'react';
 import { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom'; 
-import { getTokenPayload } from '../services/TokenPayload';
 import { MdEmail } from "react-icons/md";
 import { SiLinkedin } from "react-icons/si";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaSquareGithub } from "react-icons/fa6";
 import { FaInstagramSquare } from "react-icons/fa";
 
-function Card() {
-
-	const navigate = useNavigate();
-	const { userID } = getTokenPayload();
+function ShowReadyCard() {
 
 	const [photo, setPhoto] = useState();
 	const [name, setName] = useState();
@@ -22,6 +18,7 @@ function Card() {
 	const [interests, setInterests] = useState();
 	const [footerLinks, setFooterLinks] = useState([]);
 	const [cardExists, setCardExists] = useState(false);
+	const { id } = useParams();
 
 	const[twitter, setTwitter] = useState('');
 	const[github, setGithub] = useState('');
@@ -30,16 +27,7 @@ function Card() {
 	const[emailLink, setEmailLink] = useState('');
 
 	useEffect(() => {
-		axios.get('http://localhost:3000/cardAuth')
-		.then(result => {
-			console.log(result);
-			if(result.data !== "success"){
-				navigate('/login');
-			}
-		})
-		.catch(err => console.log(err));
-
-		axios.get(`http://localhost:3000/card/${userID}`)
+		axios.get(`http://localhost:3000/showCard/${id}`)
 		.then(result => {
 			if (result){
 				const { 
@@ -101,30 +89,11 @@ function Card() {
 		}
 	}
 
-	const deleteCard = () => {
-		if(window.confirm("Are you sure you want to delete your card?")){
-			axios.delete(`http://localhost:3000/card/${userID}`)
-			.then(res => {
-				window.alert('Card deleted successfully');
-				console.log('Card deleted successfully', res);
-				navigate('/profile');
-			})
-			.catch(err => console.log('Error deleting card: ',err))
-		}
-	}
-
-
 	return (
 		<div>
 			{cardExists ? (
 				<>
-					<div className="profile-btn d-flex justify-content-center">
-						<Link to="/profile" className="btn btn-outline-info">Back to Profile</Link>
-					</div>
 					<div className="card-container">
-						<div className="edit-button">
-							<Link to="/update-card" className="btn btn-outline-primary">Edit</Link>
-						</div>
 						<div className="full-card">
 							<div className='info-section'>
 								<img src={`http://localhost:3000/${photo}`} className='img-fluid' alt='photo'/>
@@ -183,17 +152,10 @@ function Card() {
 							</div>
 						</div>
 					</div>
-					<div className="delete-button">
-						<button className="btn btn-outline-danger" onClick={ deleteCard }>Delete Card</button>
-					</div>
 				</>
 			) : (
 				<div className="no-card-msg">
-					<h2 className="text-light mb-5">Looks like you don't have a card yet.</h2>
-					<div className="no-card-buttons">
-						<Link to="/card-build" className="btn btn-primary">Create your Digital Card</Link>
-						<Link to="/profile" className="btn btn-outline-info">Back to Profile</Link>
-					</div>
+					<h2 className="text-light mb-5">Card does not exist</h2>
 				</div>
 			)}
 		</div>
@@ -201,4 +163,4 @@ function Card() {
 
 }
 
-export default Card;
+export default ShowReadyCard;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { getTokenPayload } from '../services/TokenPayload';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function CardBuild() {
@@ -165,6 +165,7 @@ function CardBuild() {
 										</div>
 									</div>
 									<button type="submit" className="btn btn-primary mt-4 center">Create Card</button>
+									<Link to="/profile" className="btn btn-secondary mt-4 mx-2 center">Cancel</Link>
 								</form>
 							</div>
 						</div>
