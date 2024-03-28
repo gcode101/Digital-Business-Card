@@ -10,8 +10,6 @@ const { upload } = require("./services/imgStorage");
 const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./controllers/CardController");
 
 const app = express();
-app.use(express.json());
-app.use(express.static('public'));
 app.use(cors({
 	origin: ["https://digitalbusinesscard2024.vercel.app"],
 	methods: ["GET", "POST", "PUT", "DELETE"],
@@ -25,6 +23,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
+app.use(express.static('public'));
 app.use(cookieParser());
 
 mongoose.connect(dburl);
