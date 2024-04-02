@@ -1,7 +1,7 @@
 const UserModel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { secret } = require("../config.js");
+const secret = process.env.SECRET_KEY;
 
 
 const createUser = (req, res) => {
