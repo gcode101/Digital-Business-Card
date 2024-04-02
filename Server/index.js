@@ -10,18 +10,23 @@ const { verifyToken } = require("./services/auth");
 const { upload } = require("./services/imgStorage");
 const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./controllers/CardController");
 
-const app = express();
-app.use(cors({
-	origin: "http://localhost:5173",
-	methods: ["GET", "POST", "PUT", "DELETE"],
-	credentials: true
-}));
 
+const corsOptions = {
+	origin: 'https://murmuring-temple-25569.herokuapp.com/',
+	credentials: true
+}
+
+const app = express();
 app.use(express.json());
+app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use(cookieParser());
 
 mongoose.connect(dburl);
+
+app.get('/', (req, res) => {
+	res.json('Hello World!');
+});
 
 app.get('/logout', logout);
 
