@@ -12,7 +12,7 @@ const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./
 
 
 const corsOptions = {
-	origin: 'https://murmuring-temple-25569.herokuapp.com/',
+	origin: 'https://digitalbusinesscard2024.vercel.app',
 	credentials: true
 }
 

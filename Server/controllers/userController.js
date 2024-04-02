@@ -32,6 +32,9 @@ const login = (req, res) => {
 			res.json("user not found");
 		}
 	})
+	  // Set CORS headers in the response
+  res.setHeader('Access-Control-Allow-Origin', 'https://digitalbusinesscard2024.vercel.app');
+  res.json({ success: true });
 }
 
 const logout = (req, res) => {
