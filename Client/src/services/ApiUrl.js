@@ -1,4 +1,4 @@
 
 export const getApiUrl = () => {
-	return 'http://localhost:3000';
+	return 'https://digital-business-card-api.vercel.app';
 }
