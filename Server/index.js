@@ -20,7 +20,7 @@ const corsOptions = {
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use(cookieParser());
 
@@ -54,11 +54,11 @@ app.listen(port, () => {
 	console.log(`server running on port ${port}`);
 });
 
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://digitalbusinesscard3043.netlify.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 module.exports = app;
