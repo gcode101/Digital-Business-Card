@@ -17,7 +17,7 @@ function Login({ onLogin }) {
 	const apiUrl = getApiUrl();
 
 
-	axios.defaults.withCredentials = true;
+	// axios.defaults.withCredentials = true;
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const validationErrors = validateForm(formData);

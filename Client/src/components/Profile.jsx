@@ -15,7 +15,7 @@ function Profile() {
 	const navigate = useNavigate();
 	const apiUrl = getApiUrl();
 	
-	axios.defaults.withCredentials = true;
+	// axios.defaults.withCredentials = true;
 	useEffect(() => {
 		axios.get(`${apiUrl}/cardAuth`)
 		.then(result => {

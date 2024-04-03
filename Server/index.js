@@ -12,13 +12,15 @@ const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./
 
 
 const corsOptions = {
-	// origin: 'https://digitalbusinesscard2024.vercel.app',
-	credentials: true
+	// origin: 'https://digitalbusinesscard3043.netlify.app',
+	// credentials: true
+	// origin: "http://localhost:5173",
+	// credentials: true
 }
 
 const app = express();
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.static('public'));
 app.use(cookieParser());
 
