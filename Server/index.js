@@ -23,6 +23,9 @@ app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use(cookieParser());
 
+// Middleware to handle OPTIONS requests
+app.options('*', cors(corsOptions));
+
 mongoose.connect(dburl);
 
 app.get('/', (req, res) => {
