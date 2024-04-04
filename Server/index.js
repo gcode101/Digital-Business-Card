@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
 const dburl = process.env.DB_URL;
 const cookieParser = require("cookie-parser");
 const { createUser, login, logout } = require("./controllers/userController");
@@ -22,9 +23,6 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(express.static('public'));
 app.use(cookieParser());
-
-// Middleware to handle OPTIONS requests
-app.options('*', cors(corsOptions));
 
 mongoose.connect(dburl);
 
@@ -52,8 +50,8 @@ app.put('/card/:userID', verifyToken, upload.single('file'), updateCard);
 
 app.delete('/card/:userID', verifyToken, deleteCard);
 
-app.listen(port, () => {
-	console.log(`server running on port ${port}`);
+app.listen(PORT, HOST, () => {
+	console.log(`server running on port ${PORT}`);
 });
 
 // app.use((req, res, next) => {
