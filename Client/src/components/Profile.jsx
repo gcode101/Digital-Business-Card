@@ -49,7 +49,7 @@ function Profile() {
 		<div className="container-lg main-container profile">
 			<div className="profile-title">
 				<div className="img-container">
-					<img src={`http://localhost:3000/${photo}`} alt="photo"/>
+					<img src={`${apiUrl}/${photo}`} alt="photo"/>
 				</div>
 				<h1 className="text-light text-center">Hello, { user }</h1>
 			</div>
@@ -67,7 +67,7 @@ function Profile() {
 							'Scan to share card' : 'Create your card to start sharing it'}
 						</h3>
 						{cardExists &&
-							<QRCode className="qrcode" value={`http://localhost:5173/show-card/${cardID}`} />
+							<QRCode className="qrcode" value={`https://digitalbusinesscard3043.netlify.app/show-card/${cardID}`} />
 						}
 					</div>
 				</div>
