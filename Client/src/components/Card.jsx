@@ -129,7 +129,7 @@ function Card() {
 						</div>
 						<div className="full-card">
 							<div className='info-section'>
-								<img src={`http://localhost:3000/${photo}`} className='img-fluid' alt='photo'/>
+								<img src={`${apiUrl}/${photo}`} className='img-fluid' alt='photo'/>
 								<div className='info m-4'>
 									<h1>{ name }</h1>
 									<h3 className="mt-2">{ title }</h3>
