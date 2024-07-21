@@ -22,7 +22,7 @@ const login = (req, res) => {
 			bcrypt.compare(password, user.password, (err, response) => {
 				if(response){
 					const token = jwt.sign({ name: user.name, email: user.email, userID: user._id }, secret, { expiresIn: "1h" });
-					res.cookie("token", token, { secure: true });
+					res.cookie("token", token, { secure: true, sameSite: 'None' });
 					res.json("success");
 				}else{
 					res.json("incorrect password");

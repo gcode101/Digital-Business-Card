@@ -19,7 +19,6 @@ function Profile() {
 	useEffect(() => {
 		axios.get(`${apiUrl}/cardAuth`)
 		.then(result => {
-			console.log("Inside profile. cardAuth: ",result);
 			if(result.data !== 'success'){
 				navigate('/login')
 			}
@@ -27,7 +26,6 @@ function Profile() {
 		.catch(err => console.log(err));
 
 		const { name, userID } = getTokenPayload();
-		console.log(`Inside profile. { name, userID } = getTokenPayload . name: ${name}, userID: ${userID}`);
 		if(name){
 			const fullNameArray = name.split(' ');
 			const firstName = fullNameArray[0];
@@ -37,7 +35,6 @@ function Profile() {
 
 		axios.get(`${apiUrl}/card/${userID}`)
 		.then(card => {
-			console.log("Inside profile. getCard axios call. card: ",card);
 			setCardExists(true);
 			setCardID(card.data._id);
 			setPhoto(card.data.picture);

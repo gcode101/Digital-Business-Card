@@ -13,8 +13,8 @@ const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./
 
 
 const corsOptions = {
-	origin: 'https://digitalbusinesscard3043.netlify.app',
-	// origin: "http://localhost:5173",
+	// origin: 'https://digitalbusinesscard3043.netlify.app',
+	origin: "http://localhost:5173",
 	credentials: true
 }
 
@@ -53,12 +53,5 @@ app.delete('/card/:userID', verifyToken, deleteCard);
 app.listen(PORT, HOST, () => {
 	console.log(`server running on port ${PORT}`);
 });
-
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', 'https://digitalbusinesscard3043.netlify.app');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   next();
-// });
 
 module.exports = app;
