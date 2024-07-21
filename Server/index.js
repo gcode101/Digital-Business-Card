@@ -13,8 +13,8 @@ const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./
 
 
 const corsOptions = {
-	// origin: 'https://digitalbusinesscard3043.netlify.app',
-	origin: "http://localhost:5173",
+	origin: 'https://digitalbusinesscard3043.netlify.app',
+	// origin: "http://localhost:5173",
 	credentials: true
 }
 
