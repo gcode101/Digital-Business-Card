@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { getTokenPayload } from '../services/TokenPayload';
 import { getApiUrl } from '../services/ApiUrl';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -14,14 +13,11 @@ function Profile() {
 	const [photo, setPhoto] = useState();
 	const navigate = useNavigate();
 	const apiUrl = getApiUrl();
-	console.log("outside of the useEffect hook");
 	
 	useEffect(() => {
     const fetchData = async () => {
-		console.log("inside fetchData");
       try {
         axios.defaults.withCredentials = true;
-		console.log("inside the try block");
 
         // Fetch authentication data
         const authResult = await axios.get(`${apiUrl}/cardAuth`);
@@ -38,8 +34,6 @@ function Profile() {
             setUser(firstName);
           }
 
-		  console.log(`fetchedName: ${fetchedName}`);
-		  console.log(`fetchedUserID: ${fetchedUserID}`);
           // Fetch additional data using userID
           if (fetchedUserID) {
             const cardResult = await axios.get(`${apiUrl}/card/${fetchedUserID}`);
@@ -57,7 +51,6 @@ function Profile() {
 		}
       }
     };
-	console.log("fetchData getting called");
     fetchData();
   }, []);
 
