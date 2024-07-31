@@ -37,7 +37,7 @@ app.post("/login", login);
 app.post('/register', createUser);
 
 app.get('/cardAuth', verifyToken, (req, res) => {
-	return res.json('success');
+	return res.json({message: 'success', user: req.user});
 });
 
 app.get('/card/:userID', verifyToken, getCard);

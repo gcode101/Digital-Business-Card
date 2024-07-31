@@ -8,6 +8,7 @@ const verifyToken = (req, res, next) => {
 	}else{
 		jwt.verify(token, secret, (err, decoded) => {
 			if(err) return res.json("wrong token");
+			req.user = decoded;
 			next();
 		});
 	}
