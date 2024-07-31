@@ -17,8 +17,10 @@ function Profile() {
 	
 	useEffect(() => {
     const fetchData = async () => {
+		console.log("inside fetchData");
       try {
         axios.defaults.withCredentials = true;
+		console.log("inside the try block");
 
         // Fetch authentication data
         const authResult = await axios.get(`${apiUrl}/cardAuth`);
@@ -50,9 +52,9 @@ function Profile() {
         console.log(err);
       }
     };
-
+	console.log("fetchData getting called");
     fetchData();
-  }, [apiUrl, navigate]);
+  }, []);
 
 
 	return(
