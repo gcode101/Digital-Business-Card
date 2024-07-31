@@ -15,33 +15,43 @@ function Profile() {
 	const navigate = useNavigate();
 	const apiUrl = getApiUrl();
 	
-	axios.defaults.withCredentials = true;
 	useEffect(() => {
-		axios.get(`${apiUrl}/cardAuth`)
-		.then(result => {
-			if(result.data !== 'success'){
-				navigate('/login')
-			}
-		})
-		.catch(err => console.log(err));
+    const fetchData = async () => {
+      try {
+        axios.defaults.withCredentials = true;
 
-		const { name, userID } = getTokenPayload();
-		if(name){
-			const fullNameArray = name.split(' ');
-			const firstName = fullNameArray[0];
+        // Fetch authentication data
+        const authResult = await axios.get(`${apiUrl}/cardAuth`);
+        if (authResult.data.message !== 'success') {
+          navigate('/login');
+        } else {
+          const fetchedName = authResult.data.user.name;
+          const fetchedUserID = authResult.data.user.userID;
 
-			setUser(firstName);
-		}
+          // Set the user state based on the name
+          if (fetchedName) {
+            const fullNameArray = fetchedName.split(' ');
+            const firstName = fullNameArray[0];
+            setUser(firstName);
+          }
 
-		axios.get(`${apiUrl}/card/${userID}`)
-		.then(card => {
+          // Fetch additional data using userID
+          if (fetchedUserID) {
+            const cardResult = await axios.get(`${apiUrl}/card/${fetchedUserID}`);
+            console.log(cardResult.data);
 			setCardExists(true);
-			setCardID(card.data._id);
-			setPhoto(card.data.picture);
-		})
-		.catch(err => console.log(err))
+			setCardID(cardResult.data._id);
+			setPhoto(cardResult.data.picture);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-	},[]);
+    fetchData();
+  }, [apiUrl, navigate]);
+
 
 	return(
 		<div className="container-lg main-container profile">
