@@ -50,7 +50,11 @@ function Profile() {
           }
         }
       } catch (err) {
-        console.log(err);
+        console.error('Error', err);
+		if(err.response){
+			console.error("Response error data", err.response.data);
+			console.error("Response error status", err.response.status);
+		}
       }
     };
 	console.log("fetchData getting called");
