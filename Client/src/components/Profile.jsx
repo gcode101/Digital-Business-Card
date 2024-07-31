@@ -14,6 +14,7 @@ function Profile() {
 	const [photo, setPhoto] = useState();
 	const navigate = useNavigate();
 	const apiUrl = getApiUrl();
+	console.log("outside of the useEffect hook");
 	
 	useEffect(() => {
     const fetchData = async () => {
