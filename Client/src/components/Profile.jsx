@@ -35,6 +35,8 @@ function Profile() {
             setUser(firstName);
           }
 
+		  console.log(`fetchedName: ${fetchedName}`);
+		  console.log(`fetchedUserID: ${fetchedUserID}`);
           // Fetch additional data using userID
           if (fetchedUserID) {
             const cardResult = await axios.get(`${apiUrl}/card/${fetchedUserID}`);
