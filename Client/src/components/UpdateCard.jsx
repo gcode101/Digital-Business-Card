@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { getTokenPayload } from '../services/TokenPayload';
 import { getApiUrl } from '../services/ApiUrl';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -18,10 +17,8 @@ function CardBuild() {
 
 	const navigate = useNavigate();
 	const [errors, setErrors] = useState({});
-	const tokenPayload = getTokenPayload();
-	const userID = tokenPayload.userID;
-	const userEmail = tokenPayload.email;
-	const name = tokenPayload.name;
+	const [userID, setUserID] = useState();
+	const [userEmail, setUserEmail] = useState();
 	const [editIndex, setEditIndex] = useState(null);
 	const apiUrl = getApiUrl();
 
@@ -69,32 +66,44 @@ function CardBuild() {
 	}
 
 	useEffect(() => {
-		axios.get(`${apiUrl}/card/${userID}`)
-		.then(result => {
-			if (result) {
+		const fetchAuth = async () => {
+			try {
+				const result = await axios.get(`${apiUrl}/cardAuth`)
 				console.log(result);
-				const {
-					picture, 
-					title,
-					socialLinks,
-					about,
-					interests,
-					footerLinks
-				} = result.data;
-
-				setPicture(picture);
-				setTitle(title);
-				setSocialLinks(socialLinks);
-				setLinkedIn(socialLinks[1]);
-				setAbout(about);
-				setInterests(interests);
-				setFooterLinks(footerLinks);
+				setUserID(result.data.user.userID);
+				setUserEmail(result.data.user.email);
+				if(result.data.message !== "success"){
+					navigate('/login');
+				}
+				else{
+					const id = result.data.user.userID;
+					const userInfo = await axios.get(`${apiUrl}/card/${id}`)
+					if (userInfo) {
+						console.log(userInfo);
+						const {
+							picture, 
+							title,
+							socialLinks,
+							about,
+							interests,
+							footerLinks
+						} = userInfo.data;
+		
+						setPicture(picture);
+						setTitle(title);
+						setSocialLinks(socialLinks);
+						setLinkedIn(socialLinks[1]);
+						setAbout(about);
+						setInterests(interests);
+						setFooterLinks(footerLinks);
+					}
+				}
+			}catch(err){
+				console.error("Error", err);
 			}
-		})
-		.catch(err => {
-			console.error('Error fetching card:', err);
-		});
-	},[]);
+		}
+		fetchAuth();
+	}, []);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

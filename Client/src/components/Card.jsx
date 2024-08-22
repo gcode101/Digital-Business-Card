@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom'; 
-import { getTokenPayload } from '../services/TokenPayload';
 import { getApiUrl } from '../services/ApiUrl';
 import { MdEmail } from "react-icons/md";
 import { SiLinkedin } from "react-icons/si";
@@ -13,7 +12,7 @@ import { FaInstagramSquare } from "react-icons/fa";
 function Card() {
 
 	const navigate = useNavigate();
-	const { userID } = getTokenPayload();
+	const [userID, setUserID] = useState();
 
 	const [photo, setPhoto] = useState();
 	const [name, setName] = useState();
@@ -32,65 +31,67 @@ function Card() {
 	const[emailLink, setEmailLink] = useState('');
 
 	useEffect(() => {
-		axios.get(`${apiUrl}/cardAuth`)
-		.then(result => {
-			console.log(result);
-			if(result.data !== "success"){
-				navigate('/login');
-			}
-		})
-		.catch(err => console.log(err));
-
-		axios.get(`${apiUrl}/card/${userID}`)
-		.then(result => {
-			if (result){
-				const { 
-					name,
-					title,
-					socialLinks,
-					about,
-					interests,
-					footerLinks
-				} = result.data;
-
-				setPhoto(result.data.picture);
-				setName(name);
-				setTitle(title);
-				setSocialLinks(socialLinks);
-				setAbout(about);
-				setInterests(interests);
-				setFooterLinks(footerLinks);
-				setCardExists(true);
-
-				function getFooterLinks() {
-					footerLinks.forEach((item) => {
-						if(item.includes('twitter')){
-							setTwitter(item);
-						}else if(item.includes('github')){
-							setGithub(item);
-						}else if(item.includes('instagram')){
-							setInsta(item);
+		const fetchAuth = async () => {
+			try {
+				const result = await axios.get(`${apiUrl}/cardAuth`)
+				console.log(result);
+				setUserID(result.data.user.userID);
+				if(result.data.message !== "success"){
+					navigate('/login');
+				}
+				else{
+					const id = result.data.user.userID;
+					const cardInfo = await axios.get(`${apiUrl}/card/${id}`)
+					if(cardInfo){
+						const { 
+							name,
+							title,
+							socialLinks,
+							about,
+							interests,
+							footerLinks
+						} = cardInfo.data;
+		
+						setPhoto(cardInfo.data.picture);
+						setName(name);
+						setTitle(title);
+						setSocialLinks(socialLinks);
+						setAbout(about);
+						setInterests(interests);
+						setFooterLinks(footerLinks);
+						setCardExists(true);
+		
+						function getFooterLinks() {
+							footerLinks.forEach((item) => {
+								if(item.includes('twitter')){
+									setTwitter(item);
+								}else if(item.includes('github')){
+									setGithub(item);
+								}else if(item.includes('instagram')){
+									setInsta(item);
+								}
+							});
 						}
-					});
-				}
+		
+						if(footerLinks){
+							getFooterLinks();
+						}
+		
+						const lastLink = socialLinks.length - 1;
+						const linkedinLink = socialLinks[lastLink];
+						if(linkedinLink !== 'undefined'){
+							setLinkedin(linkedinLink);
+						}
+						setEmailLink(`mailto:${socialLinks[0]}`);
+					}
 
-				if(footerLinks){
-					getFooterLinks();
 				}
-
-				const lastLink = socialLinks.length - 1;
-				const linkedinLink = socialLinks[lastLink];
-				if(linkedinLink !== 'undefined'){
-					setLinkedin(linkedinLink);
-				}
-				setEmailLink(`mailto:${socialLinks[0]}`);
+			}catch(err){
+				console.error('Error', err);
 			}
-
-		})
-		.catch(err => {
-			console.error('Error fetching card:', err);
-		});
-	}, []);
+		}
+		fetchAuth();
+	} ,[]);
 
 	const openNewTab = (link) => {
 		//open new tab
