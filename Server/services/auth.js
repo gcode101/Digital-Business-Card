@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET_KEY
 
 const verifyToken = (req, res, next) => {
-	const token = req.cookies.token;
+	// const token = req.cookies.token;
+	const token = localStorage.getItem('token');
 	if(!token){
 		return res.json("no token");
 	}else{
