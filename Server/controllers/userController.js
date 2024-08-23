@@ -23,7 +23,7 @@ const login = (req, res) => {
 				if(response){
 					const token = jwt.sign({ name: user.name, email: user.email, userID: user._id }, secret, { expiresIn: "1h" });
 					res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "None" });
-					res.json("success");
+					res.json({message: "success", user: {userID: user._id, name: user.name, email: user.email}});
 				}else{
 					res.json("incorrect password");
 				}

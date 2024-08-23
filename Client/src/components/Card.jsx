@@ -12,7 +12,7 @@ import { FaInstagramSquare } from "react-icons/fa";
 function Card() {
 
 	const navigate = useNavigate();
-	const [userID, setUserID] = useState();
+	const [userID, setUserID] = useState(localStorage.getItem('userID'));
 
 	const [photo, setPhoto] = useState();
 	const [name, setName] = useState();
@@ -32,16 +32,12 @@ function Card() {
 
 	useEffect(() => {
 		const fetchAuth = async () => {
-			try {
-				const result = await axios.get(`${apiUrl}/cardAuth`)
-				console.log(result);
-				setUserID(result.data.user.userID);
-				if(result.data.message !== "success"){
-					navigate('/login');
-				}
-				else{
-					const id = result.data.user.userID;
-					const cardInfo = await axios.get(`${apiUrl}/card/${id}`)
+
+			if(!userID) {
+				navigate('/login');
+			}else{
+				try{
+					const cardInfo = await axios.get(`${apiUrl}/card/${userID}`)
 					if(cardInfo){
 						const { 
 							name,
@@ -84,10 +80,9 @@ function Card() {
 						}
 						setEmailLink(`mailto:${socialLinks[0]}`);
 					}
-
+				}catch(err){
+					console.error("Error ", err);
 				}
-			}catch(err){
-				console.error('Error', err);
 			}
 		}
 		fetchAuth();

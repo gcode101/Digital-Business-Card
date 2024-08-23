@@ -16,41 +16,33 @@ function Profile() {
 	
 	useEffect(() => {
     const fetchData = async () => {
-      try {
-        axios.defaults.withCredentials = true;
 
-        // Fetch authentication data
-        const authResult = await axios.get(`${apiUrl}/cardAuth`);
-        if (authResult.data.message !== 'success') {
+		// Fetch authentication data
+		const name = localStorage.getItem("name");
+		const userID = localStorage.getItem("userID");
+
+		if(!userID){
           navigate('/login');
         } else {
-          const fetchedName = authResult.data.user.name;
-          const fetchedUserID = authResult.data.user.userID;
-
           // Set the user state based on the name
-          if (fetchedName) {
-            const fullNameArray = fetchedName.split(' ');
+          if (name) {
+            const fullNameArray = name.split(' ');
             const firstName = fullNameArray[0];
             setUser(firstName);
           }
 
           // Fetch additional data using userID
-          if (fetchedUserID) {
-            const cardResult = await axios.get(`${apiUrl}/card/${fetchedUserID}`);
+		  try{
+			const cardResult = await axios.get(`${apiUrl}/card/${userID}`);
             console.log(cardResult.data);
 			setCardExists(true);
 			setCardID(cardResult.data._id);
 			setPhoto(cardResult.data.picture);
-          }
+		  }catch(err){
+			console.log("Error ", err);
+		  }
         }
-      } catch (err) {
-        console.error('Error', err);
-		if(err.response){
-			console.error("Response error data", err.response.data);
-			console.error("Response error status", err.response.status);
-		}
-      }
-    };
+	}
     fetchData();
   }, []);
 

@@ -27,7 +27,10 @@ function Login({ onLogin }) {
 			axios.post(`${apiUrl}/login`, { email, password })
 			.then(result => {
 				console.log(result)
-				if(result.data === "success"){
+				if(result.data.message === "success"){
+					localStorage.setItem('userID', result.data.user.userID);
+					localStorage.setItem('name', result.data.user.name);
+					localStorage.setItem('email', result.data.user.email);
 					onLogin();
 					navigate('/profile');
 				}else if (result.data === "user not found"){

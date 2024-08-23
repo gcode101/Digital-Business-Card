@@ -17,8 +17,8 @@ function CardBuild() {
 
 	const navigate = useNavigate();
 	const [errors, setErrors] = useState({});
-	const [userID, setUserID] = useState();
-	const [userEmail, setUserEmail] = useState();
+	const [userID, setUserID] = useState(localStorage.getItem('userID'));
+	const [userEmail, setUserEmail] = useState(localStorage.getItem('email'));
 	const [editIndex, setEditIndex] = useState(null);
 	const apiUrl = getApiUrl();
 
@@ -67,17 +67,11 @@ function CardBuild() {
 
 	useEffect(() => {
 		const fetchAuth = async () => {
-			try {
-				const result = await axios.get(`${apiUrl}/cardAuth`)
-				console.log(result);
-				setUserID(result.data.user.userID);
-				setUserEmail(result.data.user.email);
-				if(result.data.message !== "success"){
-					navigate('/login');
-				}
-				else{
-					const id = result.data.user.userID;
-					const userInfo = await axios.get(`${apiUrl}/card/${id}`)
+			if(!userID){
+				navigate('/login');
+			}else{
+				try {
+					const userInfo = await axios.get(`${apiUrl}/card/${userID}`)
 					if (userInfo) {
 						console.log(userInfo);
 						const {
@@ -88,7 +82,7 @@ function CardBuild() {
 							interests,
 							footerLinks
 						} = userInfo.data;
-		
+
 						setPicture(picture);
 						setTitle(title);
 						setSocialLinks(socialLinks);
@@ -97,9 +91,9 @@ function CardBuild() {
 						setInterests(interests);
 						setFooterLinks(footerLinks);
 					}
+				}catch(err){
+					console.error("Error", err);
 				}
-			}catch(err){
-				console.error("Error", err);
 			}
 		}
 		fetchAuth();
