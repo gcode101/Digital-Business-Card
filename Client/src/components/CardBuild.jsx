@@ -41,10 +41,9 @@ function CardBuild() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const tokenPayload = getTokenPayload();
-		const userEmail = tokenPayload.email;
-		const userID = tokenPayload.userID;
-		const name = tokenPayload.name;
+		const userEmail = localStorage.getItem('emial');
+		const userID = localStorage.getItem('userID');
+		const name = localStorage.getItem('name');
 
 		if(!linkedIn){
 			setLinkedIn('');
