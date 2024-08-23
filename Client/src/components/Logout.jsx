@@ -9,6 +9,9 @@ function Logout() {
 	const apiUrl = getApiUrl();
 
 	const handleLogout = () => {
+		localStorage.removeItem('name');
+		localStorage.removeItem('email');
+		localStorage.removeItem('userID');
 		axios.get(`${apiUrl}/logout`)
 		.then((result) => {
 			document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -18,6 +21,7 @@ function Logout() {
 		.catch(err => {console.log(err)})
 	}
 
+	handleLogout();
 	return null;
 }
 

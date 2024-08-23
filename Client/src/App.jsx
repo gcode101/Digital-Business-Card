@@ -14,6 +14,8 @@ import CardBuild from './components/CardBuild'
 import Update from './components/UpdateCard'
 import ShowReadyCard from './components/ShowReadyCard'
 import Footer from './components/Footer'
+import axios from 'axios';
+import { getApiUrl } from './services/ApiUrl';
 
 function App() {
 
@@ -21,7 +23,18 @@ function App() {
 
   const handleLogout = () => {
   	setIsLoggedIn(false);
-  	<Logout />
+  	localStorage.removeItem('name');
+		localStorage.removeItem('email');
+		localStorage.removeItem('userID');
+    const apiUrl = getApiUrl();
+
+		axios.get(`${apiUrl}/logout`)
+		.then((result) => {
+			document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+			navigate('/login');
+
+		})
+		.catch(err => {console.log(err)})
   }
 
   const handleLogin = () => {
