@@ -15,7 +15,7 @@ const { createCard, getCard, getShowCard, updateCard, deleteCard } = require("./
 const corsOptions = {
 	// origin: 'https://digitalbusinesscard2024.vercel.app',
 	origin: 'https://digitalbusinesscard3043.netlify.app',
-	// origin: "http://localhost:4173",
+	// origin: "http://localhost:5173",
 	credentials: true
 }
 
@@ -41,15 +41,15 @@ app.get('/cardAuth', verifyToken, (req, res) => {
 	return res.json({message: 'success', user: req.user});
 });
 
-app.get('/card/:userID', verifyToken, getCard);
+app.get('/card/:userID', getCard);
 
 app.get('/showCard/:id', getShowCard);
 
-app.post('/card', verifyToken, upload.single('file'), createCard);
+app.post('/card', upload.single('file'), createCard);
 
-app.put('/card/:userID', verifyToken, upload.single('file'), updateCard);
+app.put('/card/:userID', upload.single('file'), updateCard);
 
-app.delete('/card/:userID', verifyToken, deleteCard);
+app.delete('/card/:userID', deleteCard);
 
 app.listen(PORT, HOST, () => {
 	console.log(`server running on port ${PORT}`);
